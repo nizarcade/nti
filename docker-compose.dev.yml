@@ -1,0 +1,56 @@
+services:
+  api:
+    build:
+      context: ./api
+    env_file: ./api/.env
+    environment:
+      APP_HOST: 0.0.0.0
+      APP_PORT: 8090
+      ALLOWED_ORIGINS: http://nti.localhost:3030,http://localhost:3030
+      PUBLIC_WEB_URL: http://nti.localhost:3030
+    volumes:
+      - ./api/app:/app/app
+      - ./api/pyproject.toml:/app/pyproject.toml:ro
+      - nti_uploads:/app/uploads
+    expose:
+      - "8090"
+    command:
+      - uvicorn
+      - app.main:app
+      - --host=0.0.0.0
+      - --port=8090
+      - --reload
+      - --reload-dir=/app/app
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      VITE_API_BASE_URL: http://api.nti.localhost:8090
+      VITE_PAYPAL_CLIENT_ID: ${VITE_PAYPAL_CLIENT_ID:-}
+      VITE_HMR_CLIENT_PORT: "3030"
+    expose:
+      - "3030"
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./index.html:/app/index.html
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./tsconfig.node.json:/app/tsconfig.node.json
+      # Anonymous volume so host node_modules don't shadow the image's
+      - /app/node_modules
+
+  proxy:
+    build:
+      context: ./proxy
+    depends_on:
+      - api
+      - web
+    ports:
+      - "3030:3030"
+      - "8090:8090"
+
+volumes:
+  nti_uploads:

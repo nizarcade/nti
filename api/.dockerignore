@@ -1,0 +1,8 @@
+.venv
+__pycache__
+*.pyc
+.env
+nti.db
+.git
+.gitignore
+nti_bridge_api.egg-info

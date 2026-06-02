@@ -1,0 +1,29 @@
+[project]
+name = "nti-bridge-api"
+version = "0.1.0"
+description = "Donations + contact API for Northern Transformation Initiative (NTI)"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.32.0",
+  "pydantic>=2.9.0",
+  "pydantic-settings>=2.6.0",
+  "email-validator>=2.2.0",
+  "sqlalchemy>=2.0.36",
+  "stripe>=11.2.0",
+  "httpx>=0.27.2",
+  "python-multipart>=0.0.12",
+  "psycopg[binary]>=3.2.0",
+  "pyjwt>=2.9.0",
+  "bcrypt>=4.2.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+  "pytest>=8.3.3",
+  "ruff>=0.7.4",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

@@ -1,0 +1,33 @@
+# Reads DOMAIN and ACME_EMAIL from the root .env (compose passes them in).
+# Caddy obtains and renews Let's Encrypt certs automatically.
+{
+    email {$ACME_EMAIL}
+    # Uncomment when testing — uses LE staging so you don't hit rate limits.
+    # acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+}
+
+{$DOMAIN} {
+    encode zstd gzip
+
+    # Forward everything to the internal nginx proxy on port 80.
+    reverse_proxy proxy:80 {
+        header_up X-Forwarded-Proto https
+        header_up X-Forwarded-Host  {host}
+    }
+
+    # Sensible production headers.
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options    "nosniff"
+        Referrer-Policy           "strict-origin-when-cross-origin"
+        Permissions-Policy        "geolocation=(), microphone=(), camera=()"
+        -Server
+    }
+
+    # Quiet health check.
+    @healthz path /healthz
+    respond @healthz 200 {
+        body "ok"
+        close
+    }
+}

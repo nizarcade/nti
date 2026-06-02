@@ -1,0 +1,106 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-nti}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-nti}
+    volumes:
+      - nti-db:/var/lib/postgresql/data
+    # Not published — only reachable from inside the compose network.
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-nti} -d ${POSTGRES_DB:-nti}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./api
+    restart: unless-stopped
+    env_file:
+      - ./api/.env.prod
+    environment:
+      # Override key vars at deploy time from the root .env / shell.
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://nti:${POSTGRES_PASSWORD}@db:5432/nti}
+      APP_ENV: ${APP_ENV:-production}
+      # Same-origin in prod (web nginx proxies /api → api:8090), so CORS is
+      # only needed if you call the API from another origin.
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-${PUBLIC_WEB_URL}}
+      PUBLIC_WEB_URL: ${PUBLIC_WEB_URL:?PUBLIC_WEB_URL is required in .env (e.g. https://nti.example.com)}
+    volumes:
+      - nti-uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    # Internal only — nginx (web) reverse-proxies /api/ to this service.
+    expose:
+      - "8090"
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request,sys; urllib.request.urlopen('http://127.0.0.1:8090/api/health', timeout=3); sys.exit(0)\" || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  web:
+    build:
+      context: .
+      args:
+        # Empty → frontend uses relative paths (/api/...), proxied by nginx.
+        VITE_API_BASE_URL: ""
+        VITE_PAYPAL_CLIENT_ID: ${VITE_PAYPAL_CLIENT_ID:-}
+    restart: unless-stopped
+    depends_on:
+      - api
+    # Internal only — public traffic comes in through the proxy on :80.
+    expose:
+      - "80"
+
+  proxy:
+    build:
+      context: ./proxy
+    restart: unless-stopped
+    depends_on:
+      - api
+      - web
+    # Swap the dev default.conf (listens on 3030 + 8090) for the prod one
+    # that listens on :80 and fronts both the SPA and the API.
+    volumes:
+      - ./proxy/prod.default.conf:/etc/nginx/conf.d/default.conf:ro
+    # Internal only — caddy terminates TLS and forwards to us.
+    expose:
+      - "80"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://127.0.0.1/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - proxy
+    environment:
+      DOMAIN: ${DOMAIN:?DOMAIN is required in .env (e.g. nti.example.com)}
+      ACME_EMAIL: ${ACME_EMAIL:?ACME_EMAIL is required in .env (used for Let's Encrypt notices)}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"   # HTTP/3
+
+volumes:
+  nti-db:
+  nti-uploads:
+  caddy-data:
+  caddy-config:
+
