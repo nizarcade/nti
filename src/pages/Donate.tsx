@@ -18,22 +18,13 @@ import {
 
 import SectionHeading from "@/components/ui/SectionHeading";
 import Seo from "@/components/ui/Seo";
+import { createStripeIntent } from "@/api/donations";
 
 import {
   donationTiers,
   majorDonorTiers,
   waysToGive,
 } from "@/content/site";
-
-/*
- * NTI Stripe-hosted donation page
- *
- * Donations are processed directly by Stripe using a Stripe Payment Link.
- * No STRIPE_SECRET_KEY is required by the website.
- */
-
-const STRIPE_DONATION_URL =
-  "https://donate.stripe.com/5kQ4gy4YG8J8cP9gmW1Nu00";
 
 type Designation =
   | "general"
@@ -65,7 +56,7 @@ export default function Donate() {
       : amount;
   }, [amount, custom]);
 
-  function handleStripe() {
+  async function handleStripe() {
     setError(null);
 
     if (!donorEmail) {
@@ -78,14 +69,21 @@ export default function Donate() {
       return;
     }
 
-    /*
-     * Stripe's hosted Payment Link will securely collect
-     * the donor's payment information.
-     *
-     * The website does NOT receive or store card information.
-     */
+    try {
+      const result = await createStripeIntent({
+        amount: effectiveAmount,
+        frequency: "one_time",
+        designation,
+        donor_name: donorName,
+        donor_email: donorEmail,
+        is_anonymous: false,
+      });
 
-    window.location.href = STRIPE_DONATION_URL;
+      window.location.href = result.checkout_url;
+    } catch (err) {
+      console.error("Failed to create Stripe checkout session", err);
+      setError("Unable to start secure checkout. Please try again.");
+    }
   }
 
   return (
