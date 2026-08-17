@@ -1,82 +1,161 @@
-export type GovernanceChip = { label: string; emphasis: "primary" | "default" };
-export type ValueItem = { iconKey: string; title: string; body: string };
-export type TitledBody = { title: string; body: string };
+export type GovernanceChip = {
+  label: string;
+  emphasis: "primary" | "default";
+};
+
+export type ValueItem = {
+  iconKey: string;
+  title: string;
+  body: string;
+};
+
+export type TitledBody = {
+  title: string;
+  body: string;
+};
 
 export type AboutContent = {
-  seo: { title: string; description: string };
-  intro: { eyebrow: string; title: string; subtitle: string };
-  mission: { enabled: boolean; overline: string; statement: string };
+  seo: {
+    title: string;
+    description: string;
+  };
+
+  intro: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+  };
+
+  mission: {
+    enabled: boolean;
+    overline: string;
+    statement: string;
+  };
+
   historyVision: {
     enabled: boolean;
     history: TitledBody;
     vision: TitledBody;
   };
-  values: { enabled: boolean; title: string; items: ValueItem[] };
+
+  values: {
+    enabled: boolean;
+    title: string;
+    items: ValueItem[];
+  };
+
   governance: {
     enabled: boolean;
     title: string;
     subtitle: string;
     chips: GovernanceChip[];
   };
-  ctaBand: { enabled: boolean; title: string; body: string | null };
+
+  ctaBand: {
+    enabled: boolean;
+    title: string;
+    body: string | null;
+  };
 };
 
 export const aboutDefaults: AboutContent = {
   seo: {
     title: "About NTI",
     description:
-      "Northern Transformation Initiative — a registered nonprofit committed to ethical leadership, structured community development, and measurable impact across Kenya since 2011.",
+      "Northern Transformation Initiative is a nonprofit organization working to protect vulnerable children in Kenya and expand access to education, health, safety, and opportunity.",
   },
+
   intro: {
     eyebrow: "About",
-    title: "A registered nonprofit, built for measurable impact.",
+    title: "Building brighter futures for vulnerable children.",
     subtitle:
-      "Founded in Kenya in 2011 and incorporated in the United States in 2026 to broaden fundraising capacity and international partnerships. Northern Transformation Initiative Inc. is a Massachusetts nonprofit corporation; federal 501(c)(3) tax-exempt status is pending with the IRS.",
+      "Founded in Kenya in 2011, Northern Transformation Initiative works to create safe, stable pathways for vulnerable children to learn, grow, and thrive. NTI is also an IRS-recognized U.S. 501(c)(3) public charity.",
   },
+
   mission: {
     enabled: true,
     overline: "Mission",
     statement:
-      "To empower vulnerable communities across Kenya through education, maternal support, and livelihood development — building dignity, opportunity, and measurable impact.",
+      "To protect vulnerable children and expand their opportunities through safe care, education, nutrition, health support, safeguarding, and child-centered development.",
   },
+
   historyVision: {
     enabled: true,
+
     history: {
       title: "Our history",
       body:
-        "Established on February 10, 2011, with its head office in Nairobi, Kenya, NTI supports families and youth across Northern Kenya through livelihood and agricultural programs, educational assistance for vulnerable students, and women empowerment and youth training workshops.",
+        "Northern Transformation Initiative was founded in Kenya in 2011 with a commitment to improving opportunities for vulnerable children. That commitment continues through structured programs designed around safety, education, health, dignity, and long-term development.",
     },
+
     vision: {
       title: "Our vision",
       body:
-        "We believe generosity should produce results — not dependency. NTI maintains structured planning, budgeting, monitoring, evaluation, and audit processes to ensure accountability and measurable outcomes.",
+        "We envision a future in which vulnerable children are protected from instability and given the consistent care, education, health support, and opportunities they need to reach their potential.",
     },
   },
+
   values: {
     enabled: true,
     title: "Values that guide our work",
+
     items: [
-      { iconKey: "check", title: "Integrity", body: "Stewarding every contribution with transparent reporting." },
-      { iconKey: "shield", title: "Dignity", body: "Programs designed to restore agency, not deepen dependency." },
-      { iconKey: "scale", title: "Accountability", body: "Structured planning, monitoring, evaluation, and audit." },
-      { iconKey: "heart", title: "Compassion", body: "Disciplined generosity — responsive yet sustainable." },
+      {
+        iconKey: "shield",
+        title: "Child Protection",
+        body:
+          "The safety, dignity, and well-being of every child come first.",
+      },
+      {
+        iconKey: "check",
+        title: "Integrity",
+        body:
+          "We approach every responsibility with honesty, transparency, and responsible stewardship.",
+      },
+      {
+        iconKey: "scale",
+        title: "Accountability",
+        body:
+          "Programs are designed around clear responsibilities, oversight, and measurable outcomes.",
+      },
+      {
+        iconKey: "heart",
+        title: "Dignity",
+        body:
+          "Every child deserves to be treated with respect and supported in an environment where they can grow with confidence.",
+      },
     ],
   },
+
   governance: {
     enabled: true,
     title: "Registration & governance",
-    subtitle: "NTI is a registered nonprofit operating under Kenyan and U.S. nonprofit regulatory frameworks.",
+    subtitle:
+      "NTI operates through nonprofit governance, financial oversight, safeguarding, and accountability structures in support of its mission.",
+
     chips: [
-      { label: "Founded in Kenya · Feb 10, 2011", emphasis: "primary" },
-      { label: "Incorporated in the U.S. · 2026 (Massachusetts)", emphasis: "primary" },
-      { label: "HQ: Nairobi, Kenya", emphasis: "default" },
-      { label: "U.S. Office: Boston, MA", emphasis: "default" },
-      { label: "501(c)(3) status: pending with the IRS", emphasis: "default" },
+      {
+        label: "Founded in Kenya · Feb 10, 2011",
+        emphasis: "primary",
+      },
+      {
+        label: "U.S. 501(c)(3) Public Charity",
+        emphasis: "primary",
+      },
+      {
+        label: "HQ: Nairobi, Kenya",
+        emphasis: "default",
+      },
+      {
+        label: "U.S. Office: Boston, MA",
+        emphasis: "default",
+      },
     ],
   },
+
   ctaBand: {
     enabled: true,
-    title: "Partner with a transparent, accountable nonprofit.",
+    title: "Help build a safer, brighter future for a child.",
     body: null,
   },
 };
