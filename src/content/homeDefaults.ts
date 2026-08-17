@@ -75,8 +75,8 @@ export const homeDefaults: HomeContent = {
       "NTI strengthens vulnerable communities across Kenya through education access, maternal support, livelihood development, and structured humanitarian programs — with integrity, transparency, and measurable impact.",
     primaryCta: { label: "Donate", href: "/donate", kind: "donate" },
     secondaryCta: {
-      label: "Learn About Grace Bridge",
-      href: "/programs/grace-bridge",
+      label: "Learn About Bright Futures Kenya",
+      href: "/programs/bright-futures-kenya",
       kind: "link",
     },
     tertiaryCta: { label: "Learn More", href: "/about", kind: "link" },
@@ -96,7 +96,7 @@ export const homeDefaults: HomeContent = {
       {
         iconKey: "heart",
         title: "Maternal Support",
-        body: "Safe housing, healthcare access, and mentorship for young mothers through Grace Bridge.",
+        body: "Safe housing, healthcare access, and mentorship for young mothers through Bright Futures Kenya.",
       },
       {
         iconKey: "groups",
@@ -108,12 +108,12 @@ export const homeDefaults: HomeContent = {
   graceBridge: {
     enabled: true,
     eyebrow: "Our current focus",
-    title: "Grace Bridge Initiative",
+    title: "Bright Futures Kenya",
     body:
-      "Grace Bridge supports vulnerable mothers, children, and underserved families through temporary housing, healthcare access, nutrition, education sponsorship, skills training, and structured mentorship. Inspired by the disciplined compassion of Grace Rosado, founder of New Life Home in Manchester, NH.",
+      "Bright Futures Kenya supports vulnerable mothers, children, and underserved families through temporary housing, healthcare access, nutrition, education sponsorship, skills training, and structured mentorship. Inspired by the disciplined compassion of Grace Rosado, founder of New Life Home in Manchester, NH.",
     cta: {
-      label: "Explore Grace Bridge",
-      href: "/programs/grace-bridge",
+      label: "Explore Bright Futures Kenya",
+      href: "/programs/bright-futures-kenya",
       kind: "link",
     },
     overlayText: "Structured compassion, delivered with accountability.",
