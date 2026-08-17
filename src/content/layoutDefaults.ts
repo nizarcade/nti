@@ -83,7 +83,8 @@ export const layoutDefaults: LayoutContent = {
   footer: {
     brandName: "Northern Transformation Initiative",
     brandBlurb:
-      "Restoring dignity and expanding opportunity through education, maternal support, and livelihood programs across Kenya.",
+      "Creating safe, stable pathways to education, protection, health, and opportunity for vulnerable children in Kenya.",
+
     columns: [
       {
         heading: "Explore",
@@ -120,7 +121,7 @@ export const layoutDefaults: LayoutContent = {
     },
 
     legalDisclosure:
-      "Northern Transformation Initiative Inc. is a Massachusetts nonprofit corporation (2026). Federal 501(c)(3) tax-exempt status is pending with the IRS. Contributions are not yet tax-deductible until that determination is received.",
+      "Northern Transformation Initiative Inc. is a Massachusetts nonprofit corporation and a federally recognized 501(c)(3) tax-exempt organization.",
 
     copyright:
       "© {year} Northern Transformation Initiative. All rights reserved.",
