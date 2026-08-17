@@ -26,71 +26,78 @@ export const programsDefaults: ProgramsContent = {
   seo: {
     title: "Programs",
     description:
-      "NTI's three program pillars: Education, Livelihood & Empowerment, and Youth & Community Development.",
+      "NTI supports vulnerable children in Kenya through safe residential care, education, protection, health, nutrition, and child development.",
   },
+
   intro: {
     eyebrow: "Our programs",
-    title: "Three pillars. One disciplined approach.",
+    title: "Protecting children. Expanding opportunity.",
     subtitle:
-      "Every program is designed to compound: education opens doors, livelihoods replace aid with agency, and community development sustains the gains.",
+      "Our work addresses the interconnected needs of vulnerable children by combining safe care, education, protection, health and nutrition support, and opportunities for healthy development.",
   },
+
   pillars: {
     enabled: true,
     items: [
       {
-        slug: "education",
-        title: "Education Support",
+        slug: "safe-care",
+        title: "Safe Care & Protection",
         summary:
-          "School uniforms and books, tuition assistance, sanitary dignity support for girls, and youth mentorship workshops.",
+          "Safe residential care, safeguarding, clothing, hygiene support, referrals, and structured protection for vulnerable children.",
         bullets: [
-          "School uniforms and books",
-          "Tuition assistance",
-          "Sanitary dignity support for girls",
-          "Youth mentorship and leadership workshops",
+          "Safe residential care",
+          "Child safeguarding and protection",
+          "Clothing and hygiene support",
+          "Referrals and documentation support",
+        ],
+        iconKey: "shield",
+        linkHref: null,
+        linkLabel: null,
+      },
+
+      {
+        slug: "education",
+        title: "Education & Learning",
+        summary:
+          "Consistent access to school, transportation, learning materials, tutoring, and homework support.",
+        bullets: [
+          "School access and transportation",
+          "Uniforms and learning materials",
+          "Tutoring and homework support",
+          "Consistent educational support",
         ],
         iconKey: "school",
         linkHref: null,
         linkLabel: null,
       },
+
       {
-        slug: "livelihood",
-        title: "Livelihood & Empowerment",
+        slug: "health-development",
+        title: "Health, Nutrition & Development",
         summary:
-          "Vocational skills, agricultural support, small enterprise development, and women capacity-building.",
+          "Nutritious meals, health and dental support, recreation, and structured opportunities for healthy child development.",
         bullets: [
-          "Vocational skills training",
-          "Agricultural support",
-          "Small enterprise development",
-          "Women capacity-building initiatives",
+          "Nutritious meals",
+          "Health and dental support",
+          "Recreation and play",
+          "Child development support",
         ],
-        iconKey: "build",
-        linkHref: null,
-        linkLabel: null,
-      },
-      {
-        slug: "youth",
-        title: "Youth & Community Development",
-        summary:
-          "Leadership development, behavioral change communication, peace-building, and community workshops.",
-        bullets: [
-          "Leadership development",
-          "Behavioral change communication",
-          "Peace-building initiatives",
-          "Community-based workshops",
-        ],
-        iconKey: "groups",
+        iconKey: "heart",
         linkHref: null,
         linkLabel: null,
       },
     ],
   },
- currentFocus: {
-  enabled: true,
-  title: "Current focus: Bright Futures Kenya",
-  body:
-    "Bright Futures Kenya is NTI's active humanitarian project supporting vulnerable mothers, children, and underserved families with housing, healthcare, nutrition, education sponsorship, sanitary dignity, skills training, and structured mentorship.",
-  ctaHref: "/programs/bright-futures-kenya",
-  ctaLabel: "Explore Bright Futures Kenya",
+
+  currentFocus: {
+    enabled: true,
+    title: "Current focus: Bright Futures Kenya",
+    body:
+      "Bright Futures Kenya is NTI's child-focused residential education, protection, and development program for vulnerable children ages 6–10 in Kenya. The program brings safe care, school access, nutrition, health support, safeguarding, tutoring, recreation, and child development together in one structured model.",
+    ctaHref: "/programs/bright-futures-kenya",
+    ctaLabel: "Explore Bright Futures Kenya",
+  },
+
   ctaBand: {
     enabled: true,
     title: "Help us sustain these programs.",
