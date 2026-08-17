@@ -1,4 +1,3 @@
-import { Routes, Route } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import Home from "@/pages/Home";
 import About from "@/pages/About";
@@ -57,9 +56,13 @@ export default function App() {
           <Route path="about/leadership" element={<Leadership />} />
           <Route path="about/books" element={<Books />} />
           <Route path="programs" element={<Programs />} />
-          <Route path="programs/grace-bridge" element={<GraceBridge />} />
-          <Route path="programs/grace-bridge/problem" element={<TheProblem />} />
-          <Route path="programs/grace-bridge/solution" element={<OurSolution />} />
+          <Route path="programs/bright-futures-kenya" element={<GraceBridge />} />
+<Route path="programs/bright-futures-kenya/the-need" element={<TheProblem />} />
+<Route path="programs/bright-futures-kenya/our-solution" element={<OurSolution />} />
+
+<Route path="programs/grace-bridge" element={<Navigate to="/programs/bright-futures-kenya" replace />} />
+<Route path="programs/grace-bridge/problem" element={<Navigate to="/programs/bright-futures-kenya/the-need" replace />} />
+<Route path="programs/grace-bridge/solution" element={<Navigate to="/programs/bright-futures-kenya/our-solution" replace />} />
           <Route path="impact" element={<ImpactTransparency />} />
           <Route path="get-involved" element={<GetInvolved />} />
           <Route path="volunteer" element={<Volunteer />} />
