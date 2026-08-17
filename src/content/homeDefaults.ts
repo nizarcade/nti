@@ -4,13 +4,35 @@
  * The CMS-managed source of truth lives in api/app/page_schemas.py.
  */
 
-export type Cta = { label: string; href: string; kind: "link" | "donate" };
-export type StatItem = { value: string; label: string };
-export type TierItem = { amount: number; title: string; body: string };
-export type PillarItem = { iconKey: string; title: string; body: string };
+export type Cta = {
+  label: string;
+  href: string;
+  kind: "link" | "donate";
+};
+
+export type StatItem = {
+  value: string;
+  label: string;
+};
+
+export type TierItem = {
+  amount: number;
+  title: string;
+  body: string;
+};
+
+export type PillarItem = {
+  iconKey: string;
+  title: string;
+  body: string;
+};
 
 export type HomeContent = {
-  seo: { title: string; description: string };
+  seo: {
+    title: string;
+    description: string;
+  };
+
   hero: {
     enabled: boolean;
     overline: string;
@@ -21,6 +43,7 @@ export type HomeContent = {
     tertiaryCta?: Cta | null;
     backgroundImageUrl?: string | null;
   };
+
   pillars: {
     enabled: boolean;
     eyebrow: string;
@@ -28,6 +51,11 @@ export type HomeContent = {
     subtitle: string;
     items: PillarItem[];
   };
+
+  /*
+   * Internal legacy key retained for compatibility with existing
+   * components/API. Public-facing content is Bright Futures Kenya.
+   */
   graceBridge: {
     enabled: boolean;
     eyebrow: string;
@@ -37,13 +65,19 @@ export type HomeContent = {
     imageUrl?: string | null;
     overlayText?: string | null;
   };
-  stats: { enabled: boolean; items: StatItem[] };
+
+  stats: {
+    enabled: boolean;
+    items: StatItem[];
+  };
+
   donationTiers: {
     enabled: boolean;
     eyebrow: string;
     title: string;
     items: TierItem[];
   };
+
   featuredCampaigns: {
     enabled: boolean;
     eyebrow: string;
@@ -51,111 +85,148 @@ export type HomeContent = {
     subtitle: string;
     limit: number;
   };
+
   quote: {
     enabled: boolean;
     text: string;
     attributionName: string;
     attributionRole: string;
   };
-  ctaBand: { enabled: boolean; title: string; body?: string | null };
+
+  ctaBand: {
+    enabled: boolean;
+    title: string;
+    body?: string | null;
+  };
 };
 
 export const homeDefaults: HomeContent = {
   seo: {
     title: "Home",
     description:
-      "Northern Transformation Initiative (NTI) — restoring dignity and expanding opportunity through education, maternal support, and livelihoods across Kenya.",
+      "Northern Transformation Initiative (NTI) expands opportunity for vulnerable children in Kenya through safe care, education, nutrition, health, protection, and long-term development.",
   },
+
   hero: {
     enabled: true,
-    overline: "Founded in Kenya · 2011  |  Incorporated in the U.S. · 2026",
+    overline: "Founded in Kenya · 2011  |  U.S. 501(c)(3) Public Charity",
     headline:
-      "Restoring Dignity.\nExpanding Opportunity.\nDelivering Measurable Impact.",
+      "Protecting Children.\nExpanding Opportunity.\nBuilding Brighter Futures.",
     subhead:
-      "NTI strengthens vulnerable communities across Kenya through education access, maternal support, livelihood development, and structured humanitarian programs — with integrity, transparency, and measurable impact.",
-    primaryCta: { label: "Donate", href: "/donate", kind: "donate" },
+      "Northern Transformation Initiative creates safe, stable pathways for vulnerable children in Kenya to learn, grow, and thrive through education, protection, nutrition, health support, and structured care.",
+    primaryCta: {
+      label: "Donate",
+      href: "/donate",
+      kind: "donate",
+    },
     secondaryCta: {
-      label: "Learn About Bright Futures Kenya",
+      label: "Explore Bright Futures Kenya",
       href: "/programs/bright-futures-kenya",
       kind: "link",
     },
-    tertiaryCta: { label: "Learn More", href: "/about", kind: "link" },
+    tertiaryCta: {
+      label: "Learn About NTI",
+      href: "/about",
+      kind: "link",
+    },
   },
+
   pillars: {
     enabled: true,
-    eyebrow: "Our mission",
-    title: "Generosity that produces results — not dependency.",
+    eyebrow: "Our approach",
+    title: "Every child deserves safety, education, and the opportunity to thrive.",
     subtitle:
-      "We focus on three pillars that compound: education that opens doors, maternal stability that protects futures, and livelihoods that replace aid with agency.",
+      "We address the interconnected barriers that place vulnerable children at risk by combining safe care, consistent education, health and nutrition support, and child-centered development.",
     items: [
       {
+        iconKey: "home",
+        title: "Safe Care & Protection",
+        body:
+          "A stable, protective environment where vulnerable children can live with dignity, security, consistent care, and strong safeguarding.",
+      },
+      {
         iconKey: "school",
-        title: "Education Access",
-        body: "Uniforms, books, tuition assistance, and sanitary dignity support for vulnerable students.",
+        title: "Education & Learning",
+        body:
+          "School access, transportation, uniforms, learning materials, tutoring, and homework support that help children remain engaged and progress academically.",
       },
       {
         iconKey: "heart",
-        title: "Maternal Support",
-        body: "Safe housing, healthcare access, and mentorship for young mothers through Bright Futures Kenya.",
-      },
-      {
-        iconKey: "groups",
-        title: "Livelihood & Community",
-        body: "Vocational training, women's empowerment, and community development workshops.",
+        title: "Health & Development",
+        body:
+          "Nutritious meals, clothing and hygiene essentials, health and dental support, recreation, mentorship, and opportunities for healthy childhood development.",
       },
     ],
   },
+
   graceBridge: {
     enabled: true,
-    eyebrow: "Our current focus",
+    eyebrow: "Our flagship initiative",
     title: "Bright Futures Kenya",
     body:
-      "Bright Futures Kenya supports vulnerable mothers, children, and underserved families through temporary housing, healthcare access, nutrition, education sponsorship, skills training, and structured mentorship. Inspired by the disciplined compassion of Grace Rosado, founder of New Life Home in Manchester, NH.",
+      "Bright Futures Kenya is NTI's child-focused residential education, protection, and development initiative for vulnerable children ages 6–10 in Kenya. The program is designed to provide safe care, school access, nutritious meals, health support, safeguarding, tutoring, recreation, and the stability children need to build stronger futures.",
     cta: {
       label: "Explore Bright Futures Kenya",
       href: "/programs/bright-futures-kenya",
       kind: "link",
     },
-    overlayText: "Structured compassion, delivered with accountability.",
+    overlayText:
+      "A safe place to live. A real chance to learn. A brighter future.",
   },
+
   stats: {
     enabled: true,
     items: [
-      { value: "15+", label: "Years of community service in Kenya since 2011" },
-      { value: "2026", label: "Incorporated in the U.S. (Massachusetts)" },
-      { value: "3", label: "Active program pillars" },
+      {
+        value: "2011",
+        label: "NTI founded in Kenya",
+      },
+      {
+        value: "6–10",
+        label: "Ages served by Bright Futures Kenya",
+      },
+      {
+        value: "501(c)(3)",
+        label: "IRS-recognized U.S. public charity",
+      },
     ],
   },
+
   donationTiers: {
     enabled: true,
     eyebrow: "Your impact",
-    title: "What your gift makes possible",
+    title: "Help create the conditions every child needs to thrive",
     items: [
       {
         amount: 25,
-        title: "Restores Dignity",
-        body: "Can provide 1 girl with a 3-month supply of sanitary pads and essential school supplies to keep her learning with dignity.",
+        title: "Support Daily Essentials",
+        body:
+          "Helps provide essential learning, hygiene, clothing, or nutrition needs for children supported through NTI programs.",
       },
       {
         amount: 50,
-        title: "Keeps a Child in School",
-        body: "Can help provide a student with school uniform items, shoes, or textbooks to support their learning during the academic term.",
+        title: "Strengthen a Child's Education",
+        body:
+          "Helps provide school supplies, learning materials, transportation, tutoring, and other educational support that keeps a child connected to learning.",
       },
       {
         amount: 100,
-        title: "Strengthens a Family",
-        body: "Can supply 1 family with a month of nutritious meals and access to basic medical care and housing support.",
+        title: "Invest in Safe, Stable Care",
+        body:
+          "Helps support the combined costs of safe care, nutritious meals, education, health needs, safeguarding, and child development.",
       },
     ],
   },
+
   featuredCampaigns: {
     enabled: true,
-    eyebrow: "Fundraising",
-    title: "Active campaigns",
+    eyebrow: "Take action",
+    title: "Support our current campaigns",
     subtitle:
-      "Support a specific initiative — every dollar is tracked toward its goal.",
+      "Fund practical, accountable programs that protect vulnerable children and expand their opportunities for the future.",
     limit: 3,
   },
+
   quote: {
     enabled: true,
     text:
@@ -163,10 +234,11 @@ export const homeDefaults: HomeContent = {
     attributionName: "Adan Muktar",
     attributionRole: "Founder & Executive Director",
   },
+
   ctaBand: {
     enabled: true,
-    title: "Turn lived experience into structured empowerment.",
+    title: "Help give a child the foundation for a brighter future.",
     body:
-      "Your generosity supports education access, maternal stability, and community empowerment across Kenya.",
+      "Your support helps provide vulnerable children with safety, education, nutrition, health support, protection, and opportunities to grow.",
   },
 };
