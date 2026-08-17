@@ -84,14 +84,13 @@ export const programsDefaults: ProgramsContent = {
       },
     ],
   },
-  currentFocus: {
-    enabled: true,
-    title: "Current focus: Grace Bridge Initiative",
-    body:
-      "Grace Bridge is NTI's active humanitarian project supporting vulnerable mothers, children, and underserved families with housing, healthcare, nutrition, education sponsorship, sanitary dignity, skills training, and structured mentorship.",
-    ctaHref: "/programs/grace-bridge",
-    ctaLabel: "Explore Grace Bridge",
-  },
+ currentFocus: {
+  enabled: true,
+  title: "Current focus: Bright Futures Kenya",
+  body:
+    "Bright Futures Kenya is NTI's active humanitarian project supporting vulnerable mothers, children, and underserved families with housing, healthcare, nutrition, education sponsorship, sanitary dignity, skills training, and structured mentorship.",
+  ctaHref: "/programs/bright-futures-kenya",
+  ctaLabel: "Explore Bright Futures Kenya",
   ctaBand: {
     enabled: true,
     title: "Help us sustain these programs.",
