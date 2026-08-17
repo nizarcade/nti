@@ -8,7 +8,7 @@ export default function AdminTheProblemPage() {
   return (
     <PageContentAdmin<TheProblemContent>
       slug="the-problem"
-      pageLabel="The Problem page"
+      pageLabel="The Need page"
       defaults={theProblemDefaults}
       renderPreview={(c) => <TheProblemView content={c} />}
       renderEditor={({ content, setContent }) => {
