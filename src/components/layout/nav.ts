@@ -19,9 +19,9 @@ export const navItems: NavItem[] = [
     to: "/programs",
     children: [
       { label: "All Programs", to: "/programs" },
-      { label: "Grace Bridge Initiative", to: "/programs/grace-bridge" },
-      { label: "The Problem", to: "/programs/grace-bridge/problem" },
-      { label: "Our Solution", to: "/programs/grace-bridge/solution" },
+      { label: "Bright Futures Kenya", to: "/programs/bright-futures-kenya" },
+      { label: "The Need", to: "/programs/bright-futures-kenya/the-need" },
+     { label: "Our Solution", to: "/programs/bright-futures-kenya/our-solution" },
     ],
   },
   { label: "Impact", to: "/impact" },
