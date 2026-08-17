@@ -9,7 +9,7 @@ export default function AdminGraceBridgePage() {
   return (
     <PageContentAdmin<GraceBridgeContent>
       slug="grace-bridge"
-      pageLabel="Grace Bridge page"
+      pageLabel="Bright Futures Kenya page"
       defaults={graceBridgeDefaults}
       renderPreview={(c) => <GraceBridgeView content={c} />}
       renderEditor={({ content, setContent }) => {
