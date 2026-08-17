@@ -11,27 +11,35 @@ export type GBFooterCtaButton = {
 };
 
 export type GraceBridgeContent = {
-  seo: { title: string; description: string };
+  seo: {
+    title: string;
+    description: string;
+  };
+
   hero: {
     overline: string;
     title: string;
     subhead: string;
     backgroundImageUrl: string | null;
   };
+
   inspiredBy: {
     enabled: boolean;
     title: string;
     body: string;
   };
+
   pillars: {
     enabled: boolean;
     title: string;
     items: GBPillar[];
   };
+
   footerCtas: {
     enabled: boolean;
     buttons: GBFooterCtaButton[];
   };
+
   ctaBand: {
     enabled: boolean;
     title: string;
@@ -43,62 +51,73 @@ export const graceBridgeDefaults: GraceBridgeContent = {
   seo: {
     title: "Bright Futures Kenya",
     description:
-      "NTI's flagship program supporting vulnerable young mothers in Kenya through safe housing, healthcare, nutrition, skills training, and reintegration.",
+      "Bright Futures Kenya is NTI's child-focused residential education, protection, and development program for vulnerable children ages 6–10 in Kenya.",
   },
 
   hero: {
     overline: "Our current focus",
     title: "Bright Futures Kenya",
     subhead:
-      "Structured compassion for vulnerable young mothers and underserved families in Kenya — practical solutions designed to restore stability and long-term opportunity.",
+      "A child-focused residential education, protection, and development program designed to provide vulnerable children ages 6–10 with safety, stability, education, care, and opportunity.",
     backgroundImageUrl: null,
   },
 
+  /*
+   * This section remains in the schema for compatibility with the existing
+   * page and CMS, but is disabled because the former Grace Bridge
+   * inspiration content is not part of Bright Futures Kenya.
+   */
   inspiredBy: {
-    enabled: true,
-    title: "Inspired by Grace Rosado",
-    body:
-      "Bright Futures Kenya is inspired by Grace Rosado, founder of New Life Home in Manchester, New Hampshire. Grace has devoted years of her life to serving vulnerable families with humility, consistency, and integrity. Her leadership reflects disciplined compassion — generosity paired with responsibility and accountability. Her work reminds us that authentic service is not about recognition; it is about impact. Bright Futures Kenya carries that same spirit forward.",
+    enabled: false,
+    title: "",
+    body: "",
   },
 
   pillars: {
     enabled: true,
-    title: "What we provide",
+    title: "What Bright Futures Kenya provides",
     items: [
       {
         iconKey: "home",
-        title: "Safe Housing",
-        body: "Temporary, dignified housing assistance for young mothers.",
+        title: "Safe Residential Care",
+        body:
+          "A safe and stable residential environment for vulnerable children who need consistent care and protection.",
       },
       {
-        iconKey: "hospital",
-        title: "Healthcare Access",
-        body: "Connection to maternal and primary health services.",
+        iconKey: "school",
+        title: "Education Access",
+        body:
+          "School access and transportation, uniforms, learning materials, tutoring, and homework support.",
       },
       {
         iconKey: "nutrition",
         title: "Nutrition Support",
-        body: "Food and nutrition for mothers and their children.",
+        body:
+          "Nutritious meals and consistent food support to promote children's health, growth, and ability to learn.",
       },
       {
-        iconKey: "school",
-        title: "Education Sponsorship",
-        body: "Books, uniforms, and tuition assistance to keep children in school.",
+        iconKey: "hospital",
+        title: "Health & Dental Support",
+        body:
+          "Access to appropriate health and dental support as part of each child's overall care and development.",
       },
       {
         iconKey: "shield",
-        title: "Sanitary Dignity",
-        body: "Sanitary dignity programs so schoolgirls never miss class.",
-      },
-      {
-        iconKey: "build",
-        title: "Skills Training",
-        body: "Vocational and entrepreneurial training toward independence.",
+        title: "Child Protection & Safeguarding",
+        body:
+          "Structured safeguarding and child-protection practices designed to provide a secure and supportive environment.",
       },
       {
         iconKey: "groups",
-        title: "Reintegration",
-        body: "Structured mentorship and family reintegration support.",
+        title: "Child Development",
+        body:
+          "Recreation, structured activities, guidance, and development support that help children grow socially and emotionally.",
+      },
+      {
+        iconKey: "build",
+        title: "Referrals & Documentation Support",
+        body:
+          "Referral and documentation support to help address essential needs affecting a child's care, protection, and access to services.",
       },
     ],
   },
@@ -121,8 +140,8 @@ export const graceBridgeDefaults: GraceBridgeContent = {
 
   ctaBand: {
     enabled: true,
-    title: "Support a young mother today.",
+    title: "Help build brighter futures for vulnerable children.",
     body:
-      "Every gift contributes to housing, healthcare, nutrition, and skills training.",
+      "Your support helps advance safe care, education, nutrition, health, protection, and development through Bright Futures Kenya.",
   },
 };
