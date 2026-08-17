@@ -4,34 +4,13 @@
  * The CMS-managed source of truth lives in api/app/page_schemas.py.
  */
 
-export type Cta = {
-  label: string;
-  href: string;
-  kind: "link" | "donate";
-};
-
-export type StatItem = {
-  value: string;
-  label: string;
-};
-
-export type TierItem = {
-  amount: number;
-  title: string;
-  body: string;
-};
-
-export type PillarItem = {
-  iconKey: string;
-  title: string;
-  body: string;
-};
+export type Cta = { label: string; href: string; kind: "link" | "donate" };
+export type StatItem = { value: string; label: string };
+export type TierItem = { amount: number; title: string; body: string };
+export type PillarItem = { iconKey: string; title: string; body: string };
 
 export type HomeContent = {
-  seo: {
-    title: string;
-    description: string;
-  };
+  seo: { title: string; description: string };
 
   hero: {
     enabled: boolean;
@@ -53,8 +32,8 @@ export type HomeContent = {
   };
 
   /*
-   * Internal legacy key retained for compatibility with existing
-   * components/API. Public-facing content is Bright Futures Kenya.
+   * Legacy internal key retained for compatibility with the existing
+   * frontend and CMS. Public-facing content is Bright Futures Kenya.
    */
   graceBridge: {
     enabled: boolean;
@@ -104,28 +83,28 @@ export const homeDefaults: HomeContent = {
   seo: {
     title: "Home",
     description:
-      "Northern Transformation Initiative (NTI) expands opportunity for vulnerable children in Kenya through safe care, education, nutrition, health, protection, and long-term development.",
+      "Northern Transformation Initiative (NTI) — restoring dignity and expanding opportunity for vulnerable children through education, protection, safe care, health, nutrition, and development in Kenya.",
   },
 
   hero: {
     enabled: true,
-    overline: "Founded in Kenya · 2011  |  U.S. 501(c)(3) Public Charity",
+    overline: "Founded in Kenya · 2011  |  Incorporated in the U.S. · 2026",
     headline:
-      "Protecting Children.\nExpanding Opportunity.\nBuilding Brighter Futures.",
+      "Restoring Dignity.\nExpanding Opportunity.\nDelivering Measurable Impact.",
     subhead:
-      "Northern Transformation Initiative creates safe, stable pathways for vulnerable children in Kenya to learn, grow, and thrive through education, protection, nutrition, health support, and structured care.",
+      "NTI strengthens the futures of vulnerable children in Kenya through education access, safe care, child protection, nutrition, health support, and structured development programs — with integrity, transparency, and measurable impact.",
     primaryCta: {
       label: "Donate",
       href: "/donate",
       kind: "donate",
     },
     secondaryCta: {
-      label: "Explore Bright Futures Kenya",
+      label: "Learn About Bright Futures Kenya",
       href: "/programs/bright-futures-kenya",
       kind: "link",
     },
     tertiaryCta: {
-      label: "Learn About NTI",
+      label: "Learn More",
       href: "/about",
       kind: "link",
     },
@@ -133,53 +112,53 @@ export const homeDefaults: HomeContent = {
 
   pillars: {
     enabled: true,
-    eyebrow: "Our approach",
-    title: "Every child deserves safety, education, and the opportunity to thrive.",
+    eyebrow: "Our mission",
+    title: "Generosity that produces results — not dependency.",
     subtitle:
-      "We address the interconnected barriers that place vulnerable children at risk by combining safe care, consistent education, health and nutrition support, and child-centered development.",
+      "We focus on the foundations children need to thrive: protection and safe care, consistent access to education, and the health, nutrition, and development support that strengthens their future.",
     items: [
       {
-        iconKey: "home",
+        iconKey: "shield",
         title: "Safe Care & Protection",
         body:
-          "A stable, protective environment where vulnerable children can live with dignity, security, consistent care, and strong safeguarding.",
+          "Safe residential care, safeguarding, clothing, hygiene, and structured support for vulnerable children.",
       },
       {
         iconKey: "school",
-        title: "Education & Learning",
+        title: "Education Access",
         body:
-          "School access, transportation, uniforms, learning materials, tutoring, and homework support that help children remain engaged and progress academically.",
+          "School access, transportation, uniforms, learning materials, tutoring, and homework support.",
       },
       {
         iconKey: "heart",
         title: "Health & Development",
         body:
-          "Nutritious meals, clothing and hygiene essentials, health and dental support, recreation, mentorship, and opportunities for healthy childhood development.",
+          "Nutritious meals, health and dental support, recreation, mentorship, and opportunities for healthy child development.",
       },
     ],
   },
 
   graceBridge: {
     enabled: true,
-    eyebrow: "Our flagship initiative",
+    eyebrow: "Our current focus",
     title: "Bright Futures Kenya",
     body:
-      "Bright Futures Kenya is NTI's child-focused residential education, protection, and development initiative for vulnerable children ages 6–10 in Kenya. The program is designed to provide safe care, school access, nutritious meals, health support, safeguarding, tutoring, recreation, and the stability children need to build stronger futures.",
+      "Bright Futures Kenya is NTI's child-focused residential education, protection, and development program for vulnerable children ages 6–10 in Kenya. The program provides safe residential care, school access and transportation, tutoring and homework support, nutritious meals, clothing and hygiene support, health and dental care, safeguarding, referrals, recreation, and child development.",
     cta: {
       label: "Explore Bright Futures Kenya",
       href: "/programs/bright-futures-kenya",
       kind: "link",
     },
     overlayText:
-      "A safe place to live. A real chance to learn. A brighter future.",
+      "Structured care, education, and protection for vulnerable children.",
   },
 
   stats: {
     enabled: true,
     items: [
       {
-        value: "2011",
-        label: "NTI founded in Kenya",
+        value: "15+",
+        label: "Years of community service in Kenya since 2011",
       },
       {
         value: "6–10",
@@ -195,35 +174,35 @@ export const homeDefaults: HomeContent = {
   donationTiers: {
     enabled: true,
     eyebrow: "Your impact",
-    title: "Help create the conditions every child needs to thrive",
+    title: "What your gift makes possible",
     items: [
       {
         amount: 25,
-        title: "Support Daily Essentials",
+        title: "Supports Essential Needs",
         body:
-          "Helps provide essential learning, hygiene, clothing, or nutrition needs for children supported through NTI programs.",
+          "Helps support essential needs such as nutritious meals, clothing, hygiene supplies, and learning materials for vulnerable children.",
       },
       {
         amount: 50,
-        title: "Strengthen a Child's Education",
+        title: "Supports Education",
         body:
-          "Helps provide school supplies, learning materials, transportation, tutoring, and other educational support that keeps a child connected to learning.",
+          "Helps support school access, transportation, uniforms, learning materials, tutoring, and homework support.",
       },
       {
         amount: 100,
-        title: "Invest in Safe, Stable Care",
+        title: "Supports Safe Care",
         body:
-          "Helps support the combined costs of safe care, nutritious meals, education, health needs, safeguarding, and child development.",
+          "Helps support the safe residential care, health, nutrition, protection, and development services children need to thrive.",
       },
     ],
   },
 
   featuredCampaigns: {
     enabled: true,
-    eyebrow: "Take action",
-    title: "Support our current campaigns",
+    eyebrow: "Fundraising",
+    title: "Active campaigns",
     subtitle:
-      "Fund practical, accountable programs that protect vulnerable children and expand their opportunities for the future.",
+      "Support a specific initiative — every dollar is tracked toward its goal.",
     limit: 3,
   },
 
@@ -237,8 +216,8 @@ export const homeDefaults: HomeContent = {
 
   ctaBand: {
     enabled: true,
-    title: "Help give a child the foundation for a brighter future.",
+    title: "Turn lived experience into structured empowerment.",
     body:
-      "Your support helps provide vulnerable children with safety, education, nutrition, health support, protection, and opportunities to grow.",
+      "Your generosity supports safe care, education, protection, health, nutrition, and development for vulnerable children in Kenya.",
   },
 };
