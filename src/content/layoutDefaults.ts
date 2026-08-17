@@ -1,11 +1,18 @@
 export type LayoutNavChild = { label: string; to: string };
+
 export type LayoutNavItem = {
   label: string;
   to: string;
   children: LayoutNavChild[];
 };
+
 export type LayoutFooterLink = { label: string; to: string };
-export type LayoutFooterColumn = { heading: string; links: LayoutFooterLink[] };
+
+export type LayoutFooterColumn = {
+  heading: string;
+  links: LayoutFooterLink[];
+};
+
 export type LayoutFooterContact = {
   usOfficeLine: string;
   usPhoneDisplay: string;
@@ -52,9 +59,18 @@ export const layoutDefaults: LayoutContent = {
         to: "/programs",
         children: [
           { label: "All Programs", to: "/programs" },
-          { label: "Grace Bridge Initiative", to: "/programs/grace-bridge" },
-          { label: "The Problem", to: "/programs/grace-bridge/problem" },
-          { label: "Our Solution", to: "/programs/grace-bridge/solution" },
+          {
+            label: "Bright Futures Kenya",
+            to: "/programs/bright-futures-kenya",
+          },
+          {
+            label: "The Need",
+            to: "/programs/bright-futures-kenya/the-need",
+          },
+          {
+            label: "Our Solution",
+            to: "/programs/bright-futures-kenya/our-solution",
+          },
         ],
       },
       { label: "Impact", to: "/impact", children: [] },
@@ -63,6 +79,7 @@ export const layoutDefaults: LayoutContent = {
       { label: "Contact", to: "/contact", children: [] },
     ],
   },
+
   footer: {
     brandName: "Northern Transformation Initiative",
     brandBlurb:
@@ -73,7 +90,10 @@ export const layoutDefaults: LayoutContent = {
         links: [
           { label: "About", to: "/about" },
           { label: "Programs", to: "/programs" },
-          { label: "Grace Bridge", to: "/programs/grace-bridge" },
+          {
+            label: "Bright Futures Kenya",
+            to: "/programs/bright-futures-kenya",
+          },
           { label: "Impact", to: "/impact" },
         ],
       },
@@ -88,6 +108,7 @@ export const layoutDefaults: LayoutContent = {
         ],
       },
     ],
+
     contact: {
       usOfficeLine: "119 Sumner Street, Boston, MA 02128",
       usPhoneDisplay: "+1 (646) 991-7016",
@@ -97,9 +118,13 @@ export const layoutDefaults: LayoutContent = {
       email: "info@northerntransformationinitiative.org",
       keAddress: "P.O. Box 14271-00100\nNairobi, Kenya",
     },
+
     legalDisclosure:
       "Northern Transformation Initiative Inc. is a Massachusetts nonprofit corporation (2026). Federal 501(c)(3) tax-exempt status is pending with the IRS. Contributions are not yet tax-deductible until that determination is received.",
-    copyright: "© {year} Northern Transformation Initiative. All rights reserved.",
+
+    copyright:
+      "© {year} Northern Transformation Initiative. All rights reserved.",
+
     bottomLinks: [
       { label: "Privacy", to: "/privacy" },
       { label: "Terms", to: "/terms" },
