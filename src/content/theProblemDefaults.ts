@@ -9,12 +9,12 @@ export type TheProblemContent = {
 
 export const theProblemDefaults: TheProblemContent = {
   seo: {
-    title: "The Problem",
+    title: "The Need",
     description:
       "Teen pregnancy, poverty, and housing insecurity in Kenya — and why structured support is essential.",
   },
   intro: {
-    eyebrow: "Grace Bridge · The Problem",
+    eyebrow: "Bright Futures Kenya · The Need",
     title: "The challenges we exist to address.",
   },
   issues: {
