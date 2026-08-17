@@ -94,10 +94,10 @@ const sections: Section[] = [
         ],
       },
       {
-        heading: "Grace Bridge",
+        heading: "Bright Futures Kenya",
         items: [
           { to: "/admin/pages/grace-bridge", label: "Overview", icon: <FavoriteBorderIcon /> },
-          { to: "/admin/pages/the-problem", label: "The Problem", icon: <ReportProblemOutlinedIcon /> },
+          { to: "/admin/pages/the-problem", label: "The Need", icon: <ReportProblemOutlinedIcon /> },
           { to: "/admin/pages/our-solution", label: "Our Solution", icon: <LightbulbOutlinedIcon /> },
         ],
       },
