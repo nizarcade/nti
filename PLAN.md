@@ -1,447 +1,627 @@
-# NTI / Grace Bridge Initiative — Implementation Plan
+# NTI / Bright Futures Kenya — Implementation Plan
 
-> Public-facing nonprofit website for **Northern Transformation Initiative (NTI)**
-> with its flagship program **Grace Bridge Initiative**. NGO-style, trust-first,
-> mobile-friendly, with integrated donations (Stripe + PayPal).
-
----
-
-## 1. Goals & Constraints
-
-| Goal | Notes |
-|------|-------|
-| Trust-building NGO aesthetic | Clean, restrained, professional — not flashy |
-| Mobile-first | All breakpoints down to 360px must work |
-| Conversion-oriented | Every page has a clear Donate / Get Involved CTA |
-| Accessibility (WCAG 2.1 AA) | Color contrast, alt text, keyboard nav, ARIA |
-| Performance | Lighthouse ≥ 90 on mobile (LCP < 2.5s) |
-| SEO | Static OG tags, sitemap, schema.org `NGO` markup |
-| Compliance | Donor receipts, privacy policy, cookie consent |
+> Public-facing nonprofit website for **Northern Transformation Initiative (NTI)**  
+> with its child-focused program **Bright Futures Kenya**.  
+> Professional, trust-building, mobile-friendly, transparent, and designed to support secure online giving.
 
 ---
 
-## 2. Tech Stack
+## 1. Organization
 
-**Frontend** (this repo: `nti-bridge/`)
-- **React 18 + TypeScript** (Vite)
-- **MUI v5** (`@mui/material`, `@mui/icons-material`)
-- **React Router v6** for client-side routing
-- **TanStack Query** for any data fetching (donations API, content)
-- **react-hook-form + zod** for forms (contact, volunteer, donation amount)
-- **Emotion** (default with MUI) for styling
-- **i18next** (optional — EN + SW for Kenyan audience)
+**Northern Transformation Initiative (NTI)** is a nonprofit organization founded in Kenya in 2011.
 
-**Backend** (lightweight donations + contact API)
-- Reuse FastAPI pattern from `mchanga-api` OR a thin standalone service
-- Endpoints: `POST /donations/intent`, `POST /donations/webhook`, `POST /contact`, `POST /volunteer`
-- Postgres for donor records, contact submissions, volunteer signups
-- SMTP (Postmark / SES) for receipt + thank-you emails
+NTI works to protect vulnerable children and expand opportunity through safe care, education, nutrition, health support, safeguarding, and child-centered development.
 
-**Payments**
-- **Stripe** — primary (Checkout Session + Webhooks for one-time & recurring)
-- **PayPal** — secondary (Smart Buttons, optional)
-- Both branded under a single "Donate" surface; provider chosen by donor
+### Mission
 
-**Hosting / Infra**
-- Frontend: Vercel or Netlify (static + edge)
-- Backend: Fly.io / Render (Dockerized FastAPI)
-- DNS: ntiafrica.org (apex + `www`)
-- HTTPS via provider-managed certs
-- Secrets via env (Stripe keys, PayPal client id, SMTP creds)
+NTI protects vulnerable children and expands their opportunities through safe care, education, nutrition, health support, safeguarding, and child-centered development.
+
+### Tagline
+
+**Protecting Children. Expanding Opportunity. Building Brighter Futures.**
+
+### Current Program
+
+**Bright Futures Kenya**
+
+Bright Futures Kenya is NTI's child-focused program supporting vulnerable children through safe care, education, nutrition, healthcare, safeguarding, mentorship, and development.
+
+The program currently focuses on children approximately **6–10 years old**.
 
 ---
 
-## 3. Project Structure
+## 2. Goals & Constraints
 
-```
-nti-bridge/
-├── package.json
-├── vite.config.ts
-├── tsconfig.json
-├── index.html
-├── public/
-│   ├── favicon.svg
-│   ├── og-image.png
-│   ├── robots.txt
-│   └── sitemap.xml
-├── src/
-│   ├── main.tsx
-│   ├── App.tsx
-│   ├── theme.ts                 # MUI theme tokens (palette, typography)
-│   ├── routes.tsx               # Centralized route table
-│   ├── i18n/
-│   │   ├── en.json
-│   │   └── sw.json
-│   ├── api/
-│   │   ├── client.ts            # axios/fetch wrapper
-│   │   ├── donations.ts
-│   │   └── contact.ts
-│   ├── components/
-│   │   ├── layout/
-│   │   │   ├── Header.tsx
-│   │   │   ├── Footer.tsx
-│   │   │   ├── MobileDrawer.tsx
-│   │   │   └── Layout.tsx
-│   │   ├── ui/
-│   │   │   ├── DonateButton.tsx
-│   │   │   ├── SectionHeading.tsx
-│   │   │   ├── StatCard.tsx
-│   │   │   ├── ImpactTile.tsx
-│   │   │   ├── ProgramCard.tsx
-│   │   │   ├── Quote.tsx
-│   │   │   ├── BookCover.tsx
-│   │   │   └── TrustBadges.tsx
-│   │   ├── donate/
-│   │   │   ├── DonationForm.tsx
-│   │   │   ├── AmountPicker.tsx
-│   │   │   ├── FrequencyToggle.tsx
-│   │   │   ├── StripeCheckout.tsx
-│   │   │   └── PaypalButtons.tsx
-│   │   └── forms/
-│   │       ├── ContactForm.tsx
-│   │       └── VolunteerForm.tsx
-│   ├── pages/
-│   │   ├── Home.tsx
-│   │   ├── About.tsx
-│   │   ├── Programs.tsx
-│   │   ├── GraceBridge.tsx
-│   │   ├── TheProblem.tsx
-│   │   ├── OurSolution.tsx
-│   │   ├── ImpactTransparency.tsx
-│   │   ├── GetInvolved.tsx
-│   │   ├── Donate.tsx
-│   │   ├── DonateSuccess.tsx
-│   │   ├── DonateCancel.tsx
-│   │   ├── Contact.tsx
-│   │   ├── Leadership.tsx
-│   │   ├── Books.tsx
-│   │   ├── PrivacyPolicy.tsx
-│   │   ├── Terms.tsx
-│   │   └── NotFound.tsx
-│   ├── content/
-│   │   ├── home.ts              # Static copy as typed constants
-│   │   ├── programs.ts
-│   │   ├── impactStats.ts
-│   │   └── leadership.ts
-│   ├── assets/
-│   │   ├── images/
-│   │   │   ├── hero/
-│   │   │   ├── programs/
-│   │   │   ├── leadership/
-│   │   │   └── books/
-│   │   └── logos/
-│   ├── hooks/
-│   │   └── useScrollToTop.ts
-│   └── utils/
-│       ├── format.ts            # currency, dates
-│       └── seo.ts               # Helmet/meta helpers
-└── tests/
-    ├── e2e/                     # Playwright smoke tests
-    └── unit/                    # vitest
-```
+| Goal | Requirement |
+|---|---|
+| Trust-building | Clean, professional nonprofit presentation |
+| Child-focused | Public content centers children, education, protection, health, and opportunity |
+| Mobile-first | All pages work properly on phones, tablets, and desktop |
+| Donation-focused | Clear Donate calls to action throughout the site |
+| Accessibility | WCAG-conscious contrast, navigation, labels, alt text, and keyboard support |
+| Performance | Fast-loading pages and optimized images |
+| Transparency | Clear nonprofit status, governance, contact information, and impact information |
+| SEO | Proper metadata, sitemap, Open Graph, and structured data |
+| Security | Secure payment and contact systems |
 
 ---
 
-## 4. Design System (MUI Theme)
+## 3. Public Messaging
 
-**Palette** — quiet, dignified, hopeful.
+### Core Message
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `primary.main` | `#1E5A8A` (deep trust blue) | Headers, primary buttons |
-| `primary.dark` | `#143E63` | Hover states |
-| `secondary.main` | `#C58A3F` (warm earth gold) | Donate CTA, accents |
-| `success.main` | `#3F8A5C` | Success messages |
-| `background.default` | `#FAFAF7` (warm white) | Page bg |
-| `background.paper` | `#FFFFFF` | Cards |
-| `text.primary` | `#1F2A37` | Body |
-| `text.secondary` | `#52606D` | Subtle copy |
-| `divider` | `#E5E7EB` | Hairlines |
+A child's circumstances should never determine the limits of their future. Safety, education, nutrition, health, and consistent care can create a foundation for lasting opportunity.
 
-**Typography**
-- Headings: **Source Serif Pro** (or **Lora**) — serif for warmth & gravitas
-- Body: **Inter** — neutral, highly legible
-- Base size 16px; line-height 1.6; H1 ~2.5rem desktop / 2rem mobile
+### Poverty Message
 
-**Spacing**: MUI default 8px unit; section vertical padding `py: { xs: 6, md: 10 }`.
+Poverty can limit a child's access to safety, education, nutrition, and healthcare. Structured support helps remove those barriers and gives children a stronger foundation to learn, grow, and thrive.
 
-**Components** overrides (in `theme.ts`):
-- `MuiButton`: `disableElevation`, larger touch target (44px min)
-- `MuiContainer`: `maxWidth="lg"` default
-- `MuiAppBar`: `position="sticky"`, white bg, subtle shadow on scroll
-- `MuiCard`: rounded `borderRadius: 12`, subtle border instead of shadow
+These are **organizational messages**, not quotations attributed to Adan Muktar or another individual.
 
 ---
 
-## 5. Routing & Pages
+## 4. Bright Futures Kenya
 
-| Path | Page | Purpose |
-|------|------|---------|
-| `/` | `Home` | Headline, mission, hero CTA, impact stats, program teaser, donor tiers, quote |
-| `/about` | `About` | History (since 2011), vision, mission, leadership preview, registration |
-| `/about/leadership` | `Leadership` | Adan Muktar bio + board (TBA placeholders) |
-| `/about/books` | `Books` | Memoirs of a Lost Boy, The Rebirth of a Nation |
-| `/programs` | `Programs` | Overview: Education, Livelihood, Youth |
-| `/programs/grace-bridge` | `GraceBridge` | Flagship program detail |
-| `/programs/grace-bridge/problem` | `TheProblem` | Teen pregnancy, poverty, housing insecurity |
-| `/programs/grace-bridge/solution` | `OurSolution` | Housing, healthcare, nutrition, skills, reintegration |
-| `/impact` | `ImpactTransparency` | Annual reports, financials, compliance docs |
-| `/get-involved` | `GetInvolved` | Donate / Partner / Volunteer hub |
-| `/donate` | `Donate` | Donation form (amount, frequency, provider) |
-| `/donate/success` | `DonateSuccess` | Post-Stripe redirect |
-| `/donate/cancel` | `DonateCancel` | Stripe cancel return |
-| `/contact` | `Contact` | Contact form + offices |
-| `/privacy` | `PrivacyPolicy` | Required for Stripe/PayPal |
-| `/terms` | `Terms` | Donor terms |
-| `*` | `NotFound` | 404 |
+Bright Futures Kenya provides coordinated child-centered support.
 
----
+### Safe Residential Care
 
-## 6. Page-by-Page Content Outline
+A stable and protective environment centered on children's safety, dignity, consistency, and well-being.
 
-### 6.1 Home
-1. **Hero** — full-width image (Kenya landscape / families), overlay with:
-   - H1: *"Restoring Dignity. Expanding Opportunity."*
-   - Sub: brief mission line
-   - Primary CTA `Donate`, secondary `Learn About Grace Bridge`
-2. **Mission band** — 1-paragraph mission + 3 pillars (Education, Maternal Support, Livelihoods) as icon cards
-3. **Grace Bridge teaser** — image left, copy right, "Learn more →"
-4. **Impact stats strip** — `20,000+ families`, `Since 2011`, `Programs in Kenya`
-5. **Donor tiers** — $25, $50, $100 cards with "Give now"
-6. **Quote** — Adan's school sanctuary quote, attributed
-7. **Final CTA band** — Donate / Partner / Volunteer triad
+### Education Access
 
-### 6.2 About NTI
-- History (Founded Feb 10, 2011 · Nairobi HQ)
-- Vision & Values
-- Leadership preview (link to `/about/leadership`)
-- Registration status placeholder (Registration No: `_____`)
-- Trust badges (Kenya NGO Board, US 501(c)(3) when available)
+Support may include:
 
-### 6.3 Leadership
-- Adan Muktar — Founder & ED — photo, bio, contact line, link to books
-- Program Director — *To Be Announced* (placeholder card)
-- Board of Directors — placeholder grid (TBA)
+- School enrollment
+- Transportation
+- Uniforms
+- Learning materials
+- Tutoring
+- Homework support
 
-### 6.4 Books
-- `Memoirs of a Lost Boy` with cover + Amazon link
-- `The Rebirth of a Nation` with cover (link TBA)
-- Author quote block
+### Nutrition
 
-### 6.5 Programs (overview)
-- 3 program cards: Education, Livelihood & Empowerment, Youth & Community
-- Each links to a section anchor or future detail page
+Nutritious meals that support children's health, learning, growth, and development.
 
-### 6.6 Grace Bridge Initiative
-- Hero with program name + tagline ("Structured compassion")
-- "Inspired by Grace Rosado" section with attribution
-- What we provide (7-bullet list with icons)
-- Links to `/problem` and `/solution` sub-pages
-- Donor CTA at bottom
+### Health Support
 
-### 6.7 The Problem
-- Stats on teen pregnancy in Kenya (cite sources)
-- Poverty / housing insecurity
-- Need for structured support
-- Use `Accordion` or alternating image+text rows
+Access to appropriate medical and dental support for children in the program.
 
-### 6.8 Our Solution
-- 5 pillars as cards: Safe Housing, Healthcare, Nutrition, Skills Training, Reintegration
-- Each with icon + 2-3 sentence description
+### Safeguarding & Protection
 
-### 6.9 Impact & Transparency
-- Headline stats
-- Annual reports — downloadable PDFs (Table / list)
-- Financial summary (latest year)
-- Compliance documents (registration certificates)
-- "Why your gift matters" narrative block
+Child-centered safeguarding practices designed to protect children from harm and provide consistent supervision.
 
-### 6.10 Get Involved
-- Three columns: **Donate**, **Partner** (corporate/church), **Volunteer**
-- Volunteer form (name, email, skills, location)
-- Partnership inquiry → routes to contact form with subject
+### Development & Mentorship
 
-### 6.11 Donate
-**Most important page.** See §7 below.
-
-### 6.12 Contact
-- Kenya office: P.O. Box 14271-00100 Nairobi · info@ntiafrica.org · +254 728 979 121
-- US office: Boston, MA · 646-997-016
-- Contact form (name, email, subject, message) → backend
-- Embedded map (optional, lazy-loaded)
+Recreation, mentorship, encouragement, and structured opportunities supporting healthy childhood development.
 
 ---
 
-## 7. Donation System
+## 5. Core Programs
 
-### 7.1 UX Flow
-1. Donor lands on `/donate` (or clicks any `DonateButton`)
-2. Selects **Frequency**: One-time / Monthly
-3. Selects **Amount**: preset tiles ($25 / $50 / $100 / $250 / $500 / $1,000) + custom input
-4. Selects **Designation** (optional dropdown): General / Grace Bridge / Education / Livelihoods
-5. Selects **Provider**: Stripe (card, Apple/Google Pay) or PayPal
-6. Enters name + email
-7. Redirected to Stripe Checkout OR opens PayPal modal
-8. On success → `/donate/success` with receipt note; backend emails receipt
-9. On cancel → `/donate/cancel` with retry CTA
+### Safe Care & Protection
 
-### 7.2 Stripe Integration
-- **Stripe Checkout** (hosted) — fastest path, PCI scope minimal
-- Backend `POST /api/donations/intent` creates a Checkout Session:
-  - `mode: "payment"` for one-time, `mode: "subscription"` for monthly (uses a recurring Price)
-  - `success_url`, `cancel_url`
-  - Metadata: `designation`, `donor_name`, `frequency`
-- Webhook `POST /api/donations/webhook` handles:
-  - `checkout.session.completed` → persist Donation row, send receipt email
-  - `invoice.payment_succeeded` (recurring) → log recurring payment
-  - `customer.subscription.deleted` → mark inactive
-- Idempotency via Stripe event id
+Stable, protective care designed around children's safety, dignity, consistency, and well-being.
 
-### 7.3 PayPal Integration
-- **PayPal JS SDK** with Smart Buttons (`@paypal/react-paypal-js`)
-- Client creates order via backend `POST /api/donations/paypal/create`
-- On approve → backend `POST /api/donations/paypal/capture` captures + persists
-- Subscriptions via PayPal Plans (separate flow)
+Key areas:
 
-### 7.4 Data Model (backend)
-```sql
-donations (
-  id uuid pk,
-  provider text,            -- 'stripe' | 'paypal'
-  provider_ref text unique, -- session_id / order_id
-  donor_name text,
-  donor_email text,
-  amount_cents int,
-  currency text default 'usd',
-  frequency text,           -- 'one_time' | 'monthly'
-  designation text,
-  status text,              -- 'pending' | 'succeeded' | 'failed' | 'refunded'
-  created_at timestamptz,
-  raw jsonb
-);
-```
+- Safe and stable care
+- Child safeguarding
+- Clothing and hygiene essentials
+- Consistent supervision and support
 
-### 7.5 Compliance
-- Privacy policy page (required by Stripe/PayPal)
-- Cookie consent banner (only if analytics enabled)
-- Receipt email contains: amount, date, EIN / registration #, "no goods/services provided"
-- Refund policy linked in footer
+### Education & Learning
+
+Practical educational support that helps children enter school, remain engaged, and progress academically.
+
+Key areas:
+
+- School access
+- Transportation
+- Uniforms and learning materials
+- Tutoring and homework support
+
+### Health & Development
+
+Nutrition, healthcare, recreation, mentorship, and development support that strengthen children's overall well-being.
+
+Key areas:
+
+- Nutritious meals
+- Health and dental support
+- Recreation and play
+- Mentorship and child development
 
 ---
 
-## 8. Backend API (Sketch)
+## 6. Website Pages
 
-```
-POST /api/donations/intent          → { checkout_url }     [Stripe]
-POST /api/donations/webhook         → 200 OK                [Stripe webhook]
-POST /api/donations/paypal/create   → { order_id }
-POST /api/donations/paypal/capture  → { status }
-POST /api/contact                   → 202 Accepted
-POST /api/volunteer                 → 202 Accepted
-GET  /api/health                    → { status: "ok" }
-```
+### Home
 
-All write endpoints rate-limited + reCAPTCHA-protected on public forms.
+The homepage should include:
+
+1. Strong child-focused hero message
+2. Mission statement
+3. Bright Futures Kenya introduction
+4. Program pillars
+5. Impact statistics
+6. Donation opportunities
+7. Child support / poverty message
+8. Final Donate / Get Involved call to action
+
+### About NTI
+
+Include:
+
+- Founded in Kenya in 2011
+- Organizational history
+- Mission
+- Vision
+- Values
+- Governance information
+- Kenya and U.S. presence
+- Nonprofit status
+
+### Leadership
+
+Featured leader:
+
+**Adan Muktar**  
+Founder & Executive Director  
+Boston, Massachusetts
+
+Adan founded Northern Transformation Initiative with a commitment to ethical leadership, transparency, education, and structured community development.
+
+His leadership responsibilities include:
+
+- U.S. partnerships
+- Fundraising strategy
+- International collaboration
+- Program development
+- Organizational leadership
+
+Do not list Adan Muktar twice under different names or positions.
+
+Additional leadership members should only be published when confirmed.
+
+### Books
+
+Feature published books by Adan Muktar.
+
+Current book:
+
+**Memoirs of a Lost Boy: A Journey of Identity**
+
+Amazon link:
+
+https://www.amazon.com/MEMOIRS-LOST-BOY-journey-identity-ebook/dp/B0FS69WM9Q
+
+Additional books can be added when ready for publication on the website.
+
+Do not display a "Coming Soon" book placeholder unless intentionally requested.
+
+### Programs
+
+Programs overview:
+
+- Safe Care & Protection
+- Education & Learning
+- Health & Development
+
+### Bright Futures Kenya
+
+Dedicated program page covering:
+
+- Safe residential care
+- Education access
+- Nutrition
+- Healthcare
+- Safeguarding and protection
+- Development and mentorship
+
+### Impact & Transparency
+
+Include:
+
+- Impact statistics
+- Annual reports when available
+- Financial summaries when available
+- Compliance documents
+- Registration information
+- Organizational accountability information
+
+Do not publish unsupported impact numbers.
+
+### Get Involved
+
+Primary options:
+
+- Donate
+- Partner
+- Volunteer
+
+### Donate
+
+Secure donation page supporting:
+
+- One-time donations
+- Monthly donations
+- Preset amounts
+- Custom amounts
+- Donor name
+- Donor email
+- Secure Stripe checkout
+
+### Contact
+
+Display Kenya and U.S. contact information plus a contact form.
 
 ---
 
-## 9. SEO / Performance
+## 7. Donation Messaging
 
-- **Meta tags** per route via `react-helmet-async`
-- **Schema.org `NGO`** JSON-LD on Home (name, founder, address, sameAs)
-- **Sitemap.xml** generated at build (vite-plugin-sitemap)
-- **Open Graph** image for each major page
-- **Image optimization**: AVIF/WebP with `<picture>`, lazy-load below fold
-- **Code splitting**: route-level `React.lazy` for non-Home routes
-- **Fonts**: self-hosted, `font-display: swap`
-- **Analytics**: Plausible (privacy-friendly) or GA4 with consent
+### $25 — Support Daily Essentials
 
----
+Helps provide essential learning, hygiene, clothing, or nutrition needs for children supported through NTI programs.
 
-## 10. Accessibility
+### $50 — Strengthen a Child's Education
 
-- Landmark regions (`<header>`, `<nav>`, `<main>`, `<footer>`)
-- Skip-to-content link
-- All images have meaningful `alt`
-- Form fields with associated labels + error text
-- Focus rings preserved
-- Color contrast ≥ 4.5:1
-- Tested with axe-core + keyboard-only run
+Helps provide school supplies, learning materials, transportation, tutoring, and other educational support that keeps a child connected to learning.
 
----
+### $100 — Invest in Safe, Stable Care
 
-## 11. Content Management
+Helps support the combined costs of safe care, nutritious meals, education, health needs, safeguarding, and child development.
 
-**Phase 1 (MVP)**: copy lives in typed TS files under `src/content/` — fast, no CMS overhead.
+### $250 — Strengthen a Child's Foundation
 
-**Phase 2 (later)**: migrate to a headless CMS (Sanity / Strapi / Decap) if non-devs need to edit content. Defer until needed.
+Helps provide coordinated education, nutrition, clothing, hygiene, health, and learning support for vulnerable children.
+
+### $500 — Expand Safe Care
+
+Helps strengthen the safe, stable environment children need to learn, grow, and develop with dignity and protection.
+
+### $1,000 — Build Brighter Futures
+
+Helps advance comprehensive child-focused support through safe care, education, nutrition, health services, safeguarding, and development.
+
+Donation descriptions should use language such as **"helps provide"** rather than guaranteeing that a specific donation amount purchases an exact service.
 
 ---
 
-## 12. Testing Strategy
+## 8. Ways to Give
 
-| Layer | Tool | What |
-|-------|------|------|
-| Unit | Vitest + React Testing Library | Components, utils |
-| E2E | Playwright | Home → Donate → Stripe test mode → success |
-| Visual | Optional: Chromatic | Component regressions |
-| Lighthouse CI | GH Action | Perf/a11y budgets on PR |
+### One-Time Gift
 
----
+Make an immediate contribution toward the safety, education, nutrition, health, and development needs of vulnerable children.
 
-## 13. Implementation Phases
+### Monthly Partnership
 
-### Phase 0 — Scaffold (Day 1)
-- `npm create vite@latest nti-bridge -- --template react-ts`
-- Install MUI, Router, Emotion, react-helmet-async, axios, react-hook-form, zod
-- Set up `theme.ts`, `Layout`, `Header`, `Footer`, `routes.tsx`
-- Placeholder pages with TODOs
+Provide dependable support that helps NTI plan responsibly and sustain consistent child-centered care and education.
 
-### Phase 1 — Static Site (Week 1)
-- Implement Home, About, Programs, Grace Bridge, Problem, Solution, Contact (static form)
-- Real copy from this brief, placeholder images
-- Mobile responsiveness pass
-- Accessibility pass
+Monthly support helps NTI:
 
-### Phase 2 — Donations (Week 2)
-- Backend skeleton (FastAPI) with donations + webhook
-- Stripe Checkout one-time + monthly
-- Donate page UI
-- Receipt email
-- Privacy + Terms pages
+- Provide consistent support
+- Strengthen safe care
+- Support education and health
+- Build long-term opportunity
 
-### Phase 3 — PayPal & Polish (Week 3)
-- PayPal Smart Buttons + capture flow
-- Volunteer + Contact form backend wiring
-- Annual reports / compliance doc downloads
-- SEO meta + sitemap + JSON-LD
-- Lighthouse / a11y fixes
+### Support a Child's Education
 
-### Phase 4 — Launch
-- Domain DNS, HTTPS, prod env vars
-- Stripe live mode (after activation)
-- Analytics + uptime monitoring (UptimeRobot / Better Stack)
-- Final QA on real devices
+Help provide school access, transportation, uniforms, learning materials, tutoring, and the support children need to stay connected to learning.
+
+### Corporate Partnership
+
+Partner with NTI through funding, expertise, resources, or collaboration that strengthens sustainable opportunities for vulnerable children.
 
 ---
 
-## 14. Open Questions / To Confirm
+## 9. Donation System
 
-- [ ] Confirm legal entity name: "Northern Transformation Initiative" (the brief opens with "NTI (full legal name)" — clarify expansion)
-- [ ] Specific Kenyan county for Grace Bridge operations
-- [ ] Registration No. (Kenya NGO Board) — for footer + compliance page
-- [ ] U.S. 501(c)(3) status — affects tax-deductibility messaging
-- [ ] EIN (if US nonprofit) for donor receipts
-- [ ] Final book cover assets (2 images)
-- [ ] Photos: hero, programs, leadership headshot of Adan
-- [ ] Board of Directors names (currently TBA)
-- [ ] Annual report PDFs to publish
-- [ ] Preferred currency: USD primary, KES secondary?
-- [ ] Phone number format: `646-997-016` appears short — confirm full US number
-- [ ] Domain: `ntiafrica.org` confirmed?
+**Stripe is the approved online donation provider.**
+
+The public website should not present PayPal as a donation option.
+
+### Donation Flow
+
+1. Donor opens `/donate`
+2. Selects One-time or Monthly
+3. Selects a preset amount or enters a custom amount
+4. Enters required donor information
+5. Continues to secure Stripe checkout
+6. Payment is processed securely
+7. Successful donor is returned to the success page
+8. Cancelled checkout returns to the donation page/cancel page
+
+### Suggested Amounts
+
+- $25
+- $50
+- $100
+- $250
+- $500
+- $1,000
+- Custom amount
+
+### Stripe Backend
+
+Backend endpoint:
+
+`POST /api/donations/intent`
+
+Stripe webhook:
+
+`POST /api/donations/webhook`
+
+Webhook processing should support successful payments and recurring donations as appropriate.
+
+Payment secrets must remain in environment variables and must never be committed to the repository.
 
 ---
 
-## 15. Next Step
+## 10. Impact Statistics
 
-Approve this plan, then I'll scaffold Phase 0 (Vite + MUI + routing + layout shell) in `nti-bridge/`.
+Current public statistics:
+
+### 2011
+
+**NTI founded in Kenya**
+
+### Ages 6–10
+
+**Ages served by Bright Futures Kenya**
+
+### 501(c)(3)
+
+**IRS-recognized U.S. public charity**
+
+Do not restore the previous unsupported "20,000 families served" statement unless documented evidence is available and approved for publication.
+
+---
+
+## 11. Legal Status
+
+Public legal disclosure:
+
+**Northern Transformation Initiative Inc. is a Massachusetts nonprofit corporation and a federally recognized 501(c)(3) tax-exempt organization.**
+
+Do not display old wording saying federal 501(c)(3) status is pending.
+
+---
+
+## 12. Contact Information
+
+### Email
+
+**info@northerntransformationinitiative.org**
+
+Do not use:
+
+`info@ntiafrica.org`
+
+### United States
+
+**Northern Transformation Initiative Inc.**
+
+119 Sumner Street  
+Boston, MA 02128
+
+Phone:
+
+**+1 (646) 991-7016**
+
+### Kenya
+
+P.O. Box 14271-00100  
+Nairobi, Kenya
+
+Phone:
+
+**+254 728 979121**
+
+---
+
+## 13. Leadership Structure
+
+### Founder & Executive Director
+
+**Adan Muktar**
+
+Adan Muktar should not be duplicated in the leadership structure under another name.
+
+Only confirmed officers/directors should be publicly listed.
+
+Do not use:
+
+- Program Director — To Be Announced
+- Board of Directors — To Be Announced
+
+Empty/TBA leadership placeholders should not appear on the public website.
+
+---
+
+## 14. Technical Stack
+
+### Frontend
+
+- React
+- TypeScript
+- Vite
+- Material UI
+- React Router
+- TanStack Query where needed
+- React Hook Form
+- Zod
+- Emotion
+
+### Backend
+
+- FastAPI
+- PostgreSQL where persistent records are required
+- Stripe API
+- Secure email service for contact and donation communications
+
+---
+
+## 15. Content Management
+
+Public content should use the existing typed content system and API/CMS architecture in the repository.
+
+Existing internal compatibility names may remain when changing them could break application behavior.
+
+For example, an internal variable or API identifier containing an old name may temporarily remain if it is required for compatibility.
+
+However, **public-facing website content must display Bright Futures Kenya and the current child-focused NTI messaging.**
+
+Internal compatibility identifiers should be migrated separately only after confirming all references.
+
+---
+
+## 16. Accessibility
+
+The website should include:
+
+- Semantic page landmarks
+- Keyboard navigation
+- Visible focus states
+- Appropriate color contrast
+- Accessible form labels
+- Error messages
+- Meaningful image alt text
+- Responsive typography
+- Mobile-friendly controls
+
+---
+
+## 17. SEO & Performance
+
+Include:
+
+- Page-specific metadata
+- Open Graph information
+- Sitemap
+- robots.txt
+- Organization structured data
+- Optimized WebP/AVIF images where practical
+- Lazy loading for non-critical images
+- Route-level code splitting where appropriate
+
+---
+
+## 18. Transparency
+
+NTI should publish organizational documentation as it becomes available.
+
+Potential transparency resources include:
+
+- Annual reports
+- Financial summaries
+- Registration documentation
+- Compliance documentation
+- Program reports
+
+Do not display fake document links or fabricated report dates.
+
+If a document is not available, it can simply be omitted until ready.
+
+---
+
+## 19. Content Rules
+
+The following outdated public messaging should not be reintroduced:
+
+- Grace Bridge Initiative
+- Young-mother program positioning
+- Teen-mother program positioning
+- Maternal-support positioning
+- Grace Rosado attribution
+- Safe housing for young mothers
+- Reintegration of young mothers
+- Women empowerment as the primary program
+- Old mother-focused donation tiers
+- PayPal donation option
+- `info@ntiafrica.org`
+- Incorrect U.S. phone numbers
+- "501(c)(3) pending" language
+- Unsupported 20,000-family impact claims
+- TBA leadership placeholders
+- Personal quotations previously attributed to Adan on the public site
+
+Public program messaging should instead focus on:
+
+- Children
+- Safe care
+- Education
+- Nutrition
+- Healthcare
+- Safeguarding
+- Mentorship
+- Child development
+- Opportunity
+- Dignity
+- Accountability
+
+---
+
+## 20. Current Public Program Name
+
+The current public-facing program name is:
+
+# Bright Futures Kenya
+
+Use this name consistently throughout public-facing website content.
+
+Old internal identifiers may remain temporarily only where required for application compatibility.
+
+---
+
+## 21. Final Verification
+
+Before launch, search the repository for outdated public content using:
+
+`Grace Bridge`
+
+`young mother`
+
+`young mothers`
+
+`teen mother`
+
+`teen mothers`
+
+`maternal`
+
+`Grace Rosado`
+
+`PayPal`
+
+`info@ntiafrica.org`
+
+`646-997-016`
+
+`20,000`
+
+`pending with the IRS`
+
+Review every remaining result.
+
+If a result is public-facing content, replace or remove it.
+
+If it is an internal compatibility identifier, confirm whether changing it would break the application before renaming it.
+
+---
+
+## 22. Final Direction
+
+Northern Transformation Initiative's website should present one clear organizational identity:
+
+**Northern Transformation Initiative (NTI)**
+
+with its child-focused program:
+
+**Bright Futures Kenya**
+
+and the central message:
+
+**Protecting Children. Expanding Opportunity. Building Brighter Futures.**
+
+The website should communicate professionalism, child protection, transparency, accountability, and measurable support without exaggerating outcomes or publishing unsupported claims.
