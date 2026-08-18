@@ -1,112 +1,170 @@
 export const donationTiers = [
   {
     amount: 25,
-    title: "Restores Dignity",
-    body: "Can provide 1 girl with a 3-month supply of sanitary pads and essential school supplies to keep her learning with dignity.",
+    title: "Support Daily Essentials",
+    body:
+      "Helps provide essential learning, hygiene, clothing, or nutrition needs for children supported through NTI programs.",
   },
   {
     amount: 50,
-    title: "Keeps a Child in School",
-    body: "Can help provide a student with school uniform items, shoes, or textbooks to support their learning during the academic term.",
+    title: "Strengthen a Child's Education",
+    body:
+      "Helps provide school supplies, learning materials, transportation, tutoring, and other educational support that keeps a child connected to learning.",
   },
   {
     amount: 100,
-    title: "Strengthens a Family",
-    body: "Can supply 1 family with a month of nutritious meals and access to basic medical care and housing support.",
+    title: "Invest in Safe, Stable Care",
+    body:
+      "Helps support the combined costs of safe care, nutritious meals, education, health needs, safeguarding, and child development.",
   },
 ];
 
 export const majorDonorTiers = [
   {
     amount: 250,
-    title: "Stabilizes a Student",
-    body: "Can fully support 1 vulnerable child with tuition, uniforms, books, and mentorship for 90 days of an academic term.",
+    title: "Strengthen a Child's Foundation",
+    body:
+      "Helps provide coordinated education, nutrition, clothing, hygiene, health, and learning support for vulnerable children.",
   },
   {
     amount: 500,
-    title: "Empowers a Young Mother",
-    body: "Can sustain 1 young mother with safe housing, nutrition, and skills training for 60 days on her path to independence.",
+    title: "Expand Safe Care",
+    body:
+      "Helps strengthen the safe, stable environment children need to learn, grow, and develop with dignity and protection.",
   },
   {
     amount: 1000,
-    title: "Expands Community Impact",
-    body: "Can fund a full empowerment workshop serving 25 families across 5 days of community training and mentorship.",
+    title: "Build Brighter Futures",
+    body:
+      "Helps advance comprehensive child-focused support through safe care, education, nutrition, health services, safeguarding, and development.",
   },
 ];
 
 export const impactStats = [
-  { value: "15+", label: "Years of community service in Kenya since 2011" },
-  { value: "2026", label: "Incorporated in the U.S. (Massachusetts)" },
-  { value: "3", label: "Active program pillars" },
+  {
+    value: "2011",
+    label: "NTI founded in Kenya",
+  },
+  {
+    value: "6–10",
+    label: "Ages served by Bright Futures Kenya",
+  },
+  {
+    value: "501(c)(3)",
+    label: "IRS-recognized U.S. public charity",
+  },
 ];
 
 export const programs = [
   {
-    slug: "education",
-    title: "Education Support",
+    slug: "safe-care-protection",
+    title: "Safe Care & Protection",
     summary:
-      "School uniforms and books, tuition assistance, sanitary dignity support for girls, and youth mentorship workshops.",
+      "Stable, protective care designed around children's safety, dignity, consistency, and well-being.",
     bullets: [
-      "School uniforms and books",
-      "Tuition assistance",
-      "Sanitary dignity support for girls",
-      "Youth mentorship and leadership workshops",
+      "Safe and stable care",
+      "Child safeguarding",
+      "Clothing and hygiene essentials",
+      "Consistent supervision and support",
     ],
   },
   {
-    slug: "livelihood",
-    title: "Livelihood & Empowerment",
+    slug: "education-learning",
+    title: "Education & Learning",
     summary:
-      "Vocational skills, agricultural support, small enterprise development, and women capacity-building.",
+      "Practical educational support that helps children enter school, remain engaged, and progress academically.",
     bullets: [
-      "Vocational skills training",
-      "Agricultural support",
-      "Small enterprise development",
-      "Women capacity-building initiatives",
+      "School access",
+      "Transportation",
+      "Uniforms and learning materials",
+      "Tutoring and homework support",
     ],
   },
   {
-    slug: "youth",
-    title: "Youth & Community Development",
+    slug: "health-development",
+    title: "Health & Development",
     summary:
-      "Leadership development, behavioral change communication, peace-building, and community workshops.",
+      "Nutrition, healthcare, recreation, mentorship, and development support that strengthen children's overall well-being.",
     bullets: [
-      "Leadership development",
-      "Behavioral change communication",
-      "Peace-building initiatives",
-      "Community-based workshops",
+      "Nutritious meals",
+      "Health and dental support",
+      "Recreation and play",
+      "Mentorship and child development",
     ],
   },
 ];
 
+/*
+ * Internal legacy export name retained for compatibility.
+ * Public-facing program name: Bright Futures Kenya.
+ */
 export const graceBridgePillars = [
-  { title: "Safe Housing", body: "Temporary, dignified housing assistance for young mothers." },
-  { title: "Healthcare Access", body: "Connection to maternal and primary health services." },
-  { title: "Nutrition Support", body: "Food and nutrition for mothers and their children." },
-  { title: "Education Sponsorship", body: "Books, uniforms, and tuition assistance to keep children in school." },
-  { title: "Sanitary Dignity", body: "Sanitary dignity programs so schoolgirls never miss class." },
-  { title: "Skills Training", body: "Vocational and entrepreneurial training toward independence." },
-  { title: "Reintegration", body: "Structured mentorship and family reintegration support." },
+  {
+    title: "Safe Residential Care",
+    body:
+      "A stable and protective living environment centered on children's safety, dignity, and well-being.",
+  },
+  {
+    title: "Education Access",
+    body:
+      "School enrollment, transportation, uniforms, learning materials, tutoring, and homework support.",
+  },
+  {
+    title: "Nutrition",
+    body:
+      "Nutritious meals that support children's health, learning, growth, and development.",
+  },
+  {
+    title: "Health Support",
+    body:
+      "Access to appropriate medical and dental support for children in the program.",
+  },
+  {
+    title: "Safeguarding & Protection",
+    body:
+      "Child-centered safeguarding practices designed to protect children from harm and provide consistent supervision.",
+  },
+  {
+    title: "Development & Mentorship",
+    body:
+      "Recreation, mentorship, encouragement, and structured opportunities that support healthy childhood development.",
+  },
 ];
 
 export const missionStatement =
-  "NTI is committed to restoring dignity and rebuilding futures for vulnerable communities in Kenya through sustainable programs focused on young mothers, education support, and family stability.";
+  "NTI protects vulnerable children and expands their opportunities through safe care, education, nutrition, health support, safeguarding, and child-centered development.";
 
-export const tagline = "Restoring Dignity. Expanding Opportunity. Delivering Measurable Impact.";
+export const tagline =
+  "Protecting Children. Expanding Opportunity. Building Brighter Futures.";
 
 export const waysToGive = [
-  { title: "One-time gift", body: "Your generous gift delivers immediate hope and tangible relief to families facing their greatest moments of need." },
-  { title: "Monthly partnership", body: "Become a sustaining partner whose faithful monthly giving transforms lives and builds enduring change in vulnerable communities." },
-  { title: "Sponsor a student", body: "Open the door to a brighter future by providing a vulnerable child with the education, dignity, and opportunity every child deserves." },
-  { title: "Corporate partnership", body: "Align your company's purpose with measurable social impact through meaningful partnerships that uplift communities and change lives." },
-  { title: "Church partnership", body: "Join hands with us in faith and service, walking alongside vulnerable families with compassion, hope, and the love of Christ." },
+  {
+    title: "One-time gift",
+    body:
+      "Make an immediate contribution toward the safety, education, nutrition, health, and development needs of vulnerable children.",
+  },
+  {
+    title: "Monthly partnership",
+    body:
+      "Provide dependable support that helps NTI plan responsibly and sustain consistent child-centered care and education.",
+  },
+  {
+    title: "Support a child's education",
+    body:
+      "Help provide school access, transportation, uniforms, learning materials, tutoring, and the support children need to stay connected to learning.",
+  },
+  {
+    title: "Corporate partnership",
+    body:
+      "Partner with NTI through funding, expertise, resources, or collaboration that strengthens sustainable opportunities for vulnerable children.",
+  },
 ];
 
 export const monthlyPartnershipBullets = [
-  "Plan responsibly",
-  "Respond to urgent needs",
-  "Expand program reach",
-  "Build long-term impact",
+  "Provide consistent support",
+  "Strengthen safe care",
+  "Support education and health",
+  "Build long-term opportunity",
 ];
 
 export const siteContact = {
@@ -121,10 +179,14 @@ export const siteContact = {
 };
 
 export const legalDisclosure =
-  "Northern Transformation Initiative Inc. is a Massachusetts nonprofit corporation (2026). Federal 501(c)(3) tax-exempt status is pending with the IRS. Contributions are not yet tax-deductible until that determination is received.";
+  "Northern Transformation Initiative Inc. is a Massachusetts nonprofit corporation and a federally recognized 501(c)(3) tax-exempt organization.";
 
-export const adanQuote =
-  "School was my sanctuary. Every day, I walked barefoot over dust and stones to reach a small classroom… Inside, I could dream.";
+/*
+ * Original NTI messaging.
+ * These are organizational statements, not quotations attributed to a person.
+ */
+export const childSupportMessage =
+  "A child's circumstances should never determine the limits of their future. Safety, education, nutrition, health, and consistent care can create a foundation for lasting opportunity.";
 
-export const adanQuote2 =
-  "Even in the shadows of fear, sparks of hope persisted. I clung to education as my only escape.";
+export const povertyMessage =
+  "Poverty can limit a child's access to safety, education, nutrition, and healthcare. Structured support helps remove those barriers and gives children a stronger foundation to learn, grow, and thrive.";
