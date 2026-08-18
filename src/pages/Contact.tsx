@@ -21,8 +21,16 @@ import { sendContact } from "@/api/donations";
 import { siteContact } from "@/content/site";
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "sent" | "error"
+  >("idle");
 
   function update<K extends keyof typeof form>(k: K, v: string) {
     setForm((f) => ({ ...f, [k]: v }));
@@ -31,6 +39,7 @@ export default function Contact() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("submitting");
+
     try {
       await sendContact({
         name: form.name,
@@ -38,8 +47,15 @@ export default function Contact() {
         subject: form.subject || undefined,
         message: form.message,
       });
+
       setStatus("sent");
-      setForm({ name: "", email: "", subject: "", message: "" });
+
+      setForm({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
     } catch {
       setStatus("error");
     }
@@ -47,13 +63,19 @@ export default function Contact() {
 
   return (
     <>
-      <Seo title="Contact" description="Reach NTI in Nairobi, Kenya or Boston, MA." pathname="/contact" />
+      <Seo
+        title="Contact"
+        description="Contact Northern Transformation Initiative in Nairobi, Kenya or Boston, Massachusetts."
+        pathname="/contact"
+      />
+
       <Container sx={{ py: { xs: 8, md: 12 } }}>
         <SectionHeading
           eyebrow="Contact"
           title="We'd be glad to hear from you."
-          subtitle="For partnership inquiries, volunteer interest, or general questions — send a note."
+          subtitle="For partnership inquiries, volunteer interest, or general questions — send us a note."
         />
+
         <Grid container spacing={4}>
           <Grid item xs={12} md={7}>
             <Card>
@@ -66,6 +88,7 @@ export default function Contact() {
                       value={form.name}
                       onChange={(e) => update("name", e.target.value)}
                     />
+
                     <TextField
                       label="Email"
                       type="email"
@@ -73,11 +96,13 @@ export default function Contact() {
                       value={form.email}
                       onChange={(e) => update("email", e.target.value)}
                     />
+
                     <TextField
                       label="Subject"
                       value={form.subject}
                       onChange={(e) => update("subject", e.target.value)}
                     />
+
                     <TextField
                       label="Message"
                       multiline
@@ -86,12 +111,19 @@ export default function Contact() {
                       value={form.message}
                       onChange={(e) => update("message", e.target.value)}
                     />
+
                     {status === "sent" && (
-                      <Alert severity="success">Thanks — we'll be in touch soon.</Alert>
+                      <Alert severity="success">
+                        Thanks — we'll be in touch soon.
+                      </Alert>
                     )}
+
                     {status === "error" && (
-                      <Alert severity="error">Something went wrong. Please try again.</Alert>
+                      <Alert severity="error">
+                        Something went wrong. Please try again.
+                      </Alert>
                     )}
+
                     <Button
                       type="submit"
                       variant="contained"
@@ -99,41 +131,70 @@ export default function Contact() {
                       disabled={status === "submitting"}
                       sx={{ alignSelf: "flex-start" }}
                     >
-                      {status === "submitting" ? "Sending…" : "Send message"}
+                      {status === "submitting"
+                        ? "Sending…"
+                        : "Send message"}
                     </Button>
                   </Stack>
                 </Box>
               </CardContent>
             </Card>
           </Grid>
+
           <Grid item xs={12} md={5}>
             <Card sx={{ height: "100%" }}>
               <CardContent sx={{ p: { xs: 3, md: 4 } }}>
-                <Typography variant="h5">Kenya Office</Typography>
+                <Typography variant="h5">
+                  Kenya Office
+                </Typography>
+
                 <Stack spacing={1.5} sx={{ mt: 2 }}>
                   <Stack direction="row" spacing={1.5}>
                     <PlaceIcon color="primary" />
-                    <Typography>{siteContact.keAddress}</Typography>
+                    <Typography>
+                      {siteContact.keAddress}
+                    </Typography>
                   </Stack>
+
                   <Stack direction="row" spacing={1.5}>
                     <EmailIcon color="primary" />
-                    <Link href={`mailto:${siteContact.email}`}>{siteContact.email}</Link>
+                    <Link href={`mailto:${siteContact.email}`}>
+                      {siteContact.email}
+                    </Link>
                   </Stack>
+
                   <Stack direction="row" spacing={1.5}>
                     <PhoneIcon color="primary" />
-                    <Link href={`tel:${siteContact.kePhoneTel}`}>{siteContact.kePhoneDisplay}</Link>
+                    <Link href={`tel:${siteContact.kePhoneTel}`}>
+                      {siteContact.kePhoneDisplay}
+                    </Link>
                   </Stack>
                 </Stack>
 
-                <Typography variant="h5" sx={{ mt: 4 }}>U.S. Office</Typography>
+                <Typography variant="h5" sx={{ mt: 4 }}>
+                  U.S. Office
+                </Typography>
+
                 <Stack spacing={1.5} sx={{ mt: 2 }}>
                   <Stack direction="row" spacing={1.5}>
                     <PlaceIcon color="primary" />
-                    <Typography>{siteContact.usOffice}</Typography>
+                    <Typography>
+                      {siteContact.usOffice}
+                    </Typography>
                   </Stack>
+
                   <Stack direction="row" spacing={1.5}>
                     <PhoneIcon color="primary" />
-                    <Link href={`tel:${siteContact.usPhoneTel}`}>{siteContact.usPhoneDisplay}</Link>
+                    <Link href={`tel:${siteContact.usPhoneTel}`}>
+                      {siteContact.usPhoneDisplay}
+                    </Link>
+                  </Stack>
+
+                  <Stack direction="row" spacing={1.5}>
+                    <EmailIcon color="primary" />
+                    <Link href={`mailto:${siteContact.email}`}>
+                      {siteContact.email}
+                    </Link>
                   </Stack>
                 </Stack>
               </CardContent>
