@@ -1,4 +1,8 @@
-export type LeadershipQuote = { text: string; attribution: string | null };
+export type LeadershipQuote = {
+  text: string;
+  attribution: string | null;
+};
+
 export type StructureMember = {
   role: string;
   name: string;
@@ -7,8 +11,16 @@ export type StructureMember = {
 };
 
 export type LeadershipContent = {
-  seo: { title: string; description: string };
-  intro: { eyebrow: string; title: string };
+  seo: {
+    title: string;
+    description: string;
+  };
+
+  intro: {
+    eyebrow: string;
+    title: string;
+  };
+
   featured: {
     enabled: boolean;
     name: string;
@@ -19,6 +31,7 @@ export type LeadershipContent = {
     phoneTel: string | null;
     paragraphs: string[];
   };
+
   voiceBlock: {
     enabled: boolean;
     eyebrow: string;
@@ -26,6 +39,7 @@ export type LeadershipContent = {
     intro: string;
     quotes: LeadershipQuote[];
   };
+
   structure: {
     enabled: boolean;
     title: string;
@@ -36,12 +50,15 @@ export type LeadershipContent = {
 export const leadershipDefaults: LeadershipContent = {
   seo: {
     title: "Leadership",
-    description: "Adan Muktar, Founder & Executive Director, and NTI's leadership structure.",
+    description:
+      "Meet Adan Muktar, Founder & Executive Director of Northern Transformation Initiative, and NTI's leadership structure.",
   },
+
   intro: {
     eyebrow: "Leadership",
-    title: "Ethical leadership grounded in lived experience.",
+    title: "Leadership grounded in lived experience and accountability.",
   },
+
   featured: {
     enabled: true,
     name: "Adan Muktar",
@@ -50,35 +67,57 @@ export const leadershipDefaults: LeadershipContent = {
     photoUrl: null,
     phoneDisplay: "+1 (646) 991-7016",
     phoneTel: "+1 (646) 991-7016",
+
     paragraphs: [
-      "Adan founded Northern Transformation Initiative with a commitment to ethical leadership and structured community development. As the author of Memoirs of a Lost Boy: A Journey of Identity, Adan shares his lived experience of displacement, resilience, and the transformative power of education.",
-      "From Boston, MA, Adan oversees U.S. partnerships, fundraising strategy, international collaboration, and program development. His leadership is grounded in first-hand understanding of hardship, a commitment to financial transparency, belief in education as a pathway to independence, and cross-cultural engagement between Africa and the United States.",
+      "Adan founded Northern Transformation Initiative with a commitment to expanding opportunity for vulnerable children. His own experience of hardship, displacement, and the transformative power of education continues to shape NTI's child-focused mission.",
+      "From Boston, Massachusetts, Adan leads U.S. partnerships, fundraising strategy, international collaboration, and program development. His leadership emphasizes child protection, education, responsible stewardship, transparency, and measurable impact.",
     ],
   },
+
   voiceBlock: {
     enabled: true,
     eyebrow: "A voice born from experience",
-    title: "Lessons translated into structured programs.",
+    title: "Lived experience transformed into opportunity for children.",
     intro:
-      "The stories documented in Adan's books are not fiction detached from reality. They reflect lived experiences of hardship, displacement, institutional instability, and resilience. NTI transforms those lessons into structured programs that support vulnerable families, strengthen education systems, provide dignity-centered assistance, and encourage ethical leadership.",
+      "Adan's experiences of hardship, displacement, institutional instability, and resilience inform NTI's commitment to creating safer and more stable pathways for vulnerable children. Education offered him possibility; NTI works to help make that possibility available to others.",
+
     quotes: [
       {
-        text: "School was my sanctuary. Every day, I walked barefoot over dust and stones to reach a small classroom… Inside, I could dream.",
+        text:
+          "School was my sanctuary. Every day, I walked barefoot over dust and stones to reach a small classroom… Inside, I could dream.",
         attribution: null,
       },
       {
-        text: "Even in the shadows of fear, sparks of hope persisted. I clung to education as my only escape.",
+        text:
+          "Even in the shadows of fear, sparks of hope persisted. I clung to education as my only escape.",
         attribution: null,
       },
     ],
   },
+
   structure: {
     enabled: true,
     title: "Leadership structure",
+
     members: [
-      { role: "President & Director", name: "Abdirahman Muktar", photoUrl: null, bioShort: null },
-      { role: "Treasurer", name: "Osman Haji", photoUrl: null, bioShort: null },
-      { role: "Clerk", name: "Ismail Jama", photoUrl: null, bioShort: null },
+      {
+        role: "President & Director",
+        name: "Adan Muktar",
+        photoUrl: null,
+        bioShort: null,
+      },
+      {
+        role: "Treasurer",
+        name: "Osman Haji",
+        photoUrl: null,
+        bioShort: null,
+      },
+      {
+        role: "Clerk",
+        name: "Ismail Jama",
+        photoUrl: null,
+        bioShort: null,
+      },
     ],
   },
 };
