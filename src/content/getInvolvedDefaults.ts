@@ -16,20 +16,24 @@ export type GetInvolvedContent = {
 export const getInvolvedDefaults: GetInvolvedContent = {
   seo: {
     title: "Get Involved",
-    description: "Donate, partner, or volunteer with NTI.",
+    description:
+      "Donate, partner, or volunteer with Northern Transformation Initiative to help create brighter futures for vulnerable children in Kenya.",
   },
+
   intro: {
     eyebrow: "Get involved",
-    title: "Three ways to make a measurable difference.",
+    title: "Help create a brighter future for a child.",
     align: "center",
   },
+
   options: {
     enabled: true,
     items: [
       {
         iconKey: "favorite",
         title: "Donate",
-        body: "One-time gifts, monthly partnerships, or sponsor a student. Every contribution is stewarded responsibly toward measurable outcomes.",
+        body:
+          "Your support helps provide safe care, education, nutritious meals, health support, safeguarding, and development opportunities for vulnerable children.",
         ctaLabel: "Give now",
         ctaHref: "/donate",
         ctaColor: "secondary",
@@ -37,7 +41,8 @@ export const getInvolvedDefaults: GetInvolvedContent = {
       {
         iconKey: "handshake",
         title: "Partner",
-        body: "Corporate and church partnerships expand our reach. Reach out to explore co-branded initiatives, matching programs, or mission trips.",
+        body:
+          "Organizations, businesses, institutions, and community partners can help strengthen sustainable support for children through funding, expertise, resources, and collaboration.",
         ctaLabel: "Start a conversation",
         ctaHref: "/contact",
         ctaColor: "primary",
@@ -45,7 +50,8 @@ export const getInvolvedDefaults: GetInvolvedContent = {
       {
         iconKey: "heart",
         title: "Volunteer",
-        body: "Lend professional skills — mentorship, training, content, finance, design — remotely or in-country in Kenya.",
+        body:
+          "Contribute professional skills and expertise that strengthen NTI's programs, operations, communications, education support, and organizational capacity.",
         ctaLabel: "Tell us your skills",
         ctaHref: "/volunteer",
         ctaColor: "primary",
