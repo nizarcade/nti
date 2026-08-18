@@ -12,7 +12,9 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 
-# ---------- Shared sub-models ----------
+# ==========================================================================
+# SHARED MODELS
+# ==========================================================================
 
 
 class Seo(BaseModel):
@@ -43,7 +45,15 @@ class PillarItem(BaseModel):
     body: str
 
 
-# ---------- Home ----------
+class HomeCtaBand(BaseModel):
+    enabled: bool = True
+    title: str
+    body: str | None = None
+
+
+# ==========================================================================
+# HOME
+# ==========================================================================
 
 
 class HomeHero(BaseModel):
@@ -68,6 +78,7 @@ class HomePillars(BaseModel):
 class HomeGraceBridge(BaseModel):
     """
     Internal legacy model name retained for compatibility.
+
     Public-facing program name: Bright Futures Kenya.
     """
 
@@ -107,12 +118,6 @@ class HomeQuote(BaseModel):
     attributionRole: str
 
 
-class HomeCtaBand(BaseModel):
-    enabled: bool = True
-    title: str
-    body: str | None = None
-
-
 class HomeContent(BaseModel):
     seo: Seo
     hero: HomeHero
@@ -125,7 +130,9 @@ class HomeContent(BaseModel):
     ctaBand: HomeCtaBand
 
 
-# ---------- About ----------
+# ==========================================================================
+# ABOUT
+# ==========================================================================
 
 
 class AboutIntro(BaseModel):
@@ -185,7 +192,9 @@ class AboutContent(BaseModel):
     ctaBand: HomeCtaBand
 
 
-# ---------- Leadership ----------
+# ==========================================================================
+# LEADERSHIP
+# ==========================================================================
 
 
 class LeadershipIntro(BaseModel):
@@ -238,7 +247,9 @@ class LeadershipContent(BaseModel):
     structure: LeadershipStructure
 
 
-# ---------- Books ----------
+# ==========================================================================
+# BOOKS
+# ==========================================================================
 
 
 class BookItem(BaseModel):
@@ -262,7 +273,9 @@ class BooksContent(BaseModel):
     books: list[BookItem]
 
 
-# ---------- Programs ----------
+# ==========================================================================
+# PROGRAMS
+# ==========================================================================
 
 
 class ProgramPillar(BaseModel):
@@ -302,10 +315,13 @@ class ProgramsContent(BaseModel):
     ctaBand: HomeCtaBand
 
 
-# ---------- Bright Futures Kenya ----------
+# ==========================================================================
+# BRIGHT FUTURES KENYA
+# ==========================================================================
 #
-# Legacy Python class names are intentionally retained where changing them
-# could break existing imports, API code, CMS data, or frontend integration.
+# Legacy Python class names are retained where changing them could break
+# existing imports, API code, CMS data, or frontend integration.
+# ==========================================================================
 
 
 class GBHero(BaseModel):
@@ -347,7 +363,9 @@ class GraceBridgeContent(BaseModel):
     ctaBand: HomeCtaBand
 
 
-# ---------- The Need ----------
+# ==========================================================================
+# THE NEED
+# ==========================================================================
 
 
 class TPIntro(BaseModel):
@@ -372,7 +390,9 @@ class TheProblemContent(BaseModel):
     ctaBand: HomeCtaBand
 
 
-# ---------- Our Solution ----------
+# ==========================================================================
+# OUR SOLUTION
+# ==========================================================================
 
 
 class OSIntro(BaseModel):
@@ -393,7 +413,9 @@ class OurSolutionContent(BaseModel):
     ctaBand: HomeCtaBand
 
 
-# ---------- Impact & Transparency ----------
+# ==========================================================================
+# IMPACT & TRANSPARENCY
+# ==========================================================================
 
 
 class ImpactIntro(BaseModel):
@@ -435,7 +457,9 @@ class ImpactContent(BaseModel):
     ctaBand: HomeCtaBand
 
 
-# ---------- Get Involved ----------
+# ==========================================================================
+# GET INVOLVED
+# ==========================================================================
 
 
 class GIIntro(BaseModel):
@@ -464,7 +488,9 @@ class GetInvolvedContent(BaseModel):
     options: GIOptions
 
 
-# ---------- Site-wide layout (header + footer) ----------
+# ==========================================================================
+# SITE-WIDE LAYOUT
+# ==========================================================================
 
 
 class LayoutNavChild(BaseModel):
@@ -519,9 +545,9 @@ class LayoutContent(BaseModel):
     footer: LayoutFooter
 
 
-# ========================================================================
+# ==========================================================================
 # DEFAULT CONTENT
-# ========================================================================
+# ==========================================================================
 
 
 HOME_DEFAULTS: dict = {
@@ -686,11 +712,11 @@ HOME_DEFAULTS: dict = {
     "quote": {
         "enabled": True,
         "text": (
-            "School was my sanctuary. Every day, I walked barefoot over dust and "
-            "stones to reach a small classroom… Inside, I could dream."
+            "When a child has safety, education, and consistent support, "
+            "poverty does not have to determine the future."
         ),
-        "attributionName": "Adan Muktar",
-        "attributionRole": "Founder & Executive Director",
+        "attributionName": "Northern Transformation Initiative",
+        "attributionRole": "Bright Futures Kenya",
     },
     "ctaBand": {
         "enabled": True,
@@ -859,28 +885,28 @@ LEADERSHIP_DEFAULTS: dict = {
     },
     "voiceBlock": {
         "enabled": True,
-        "eyebrow": "A voice born from experience",
-        "title": "Lived experience transformed into opportunity for children.",
+        "eyebrow": "A mission shaped by experience",
+        "title": "Creating opportunity where poverty limits possibility.",
         "intro": (
-            "Adan's experiences of hardship, displacement, institutional instability, "
-            "and resilience inform NTI's commitment to creating safer and more stable "
-            "pathways for vulnerable children. Education offered him possibility; "
-            "NTI works to help make that possibility available to others."
+            "Experiences of hardship, displacement, and instability helped shape "
+            "NTI's commitment to creating safer and more stable pathways for vulnerable "
+            "children. Bright Futures Kenya turns that commitment into structured "
+            "support centered on protection, education, health, nutrition, and opportunity."
         ),
         "quotes": [
             {
                 "text": (
-                    "School was my sanctuary. Every day, I walked barefoot over dust "
-                    "and stones to reach a small classroom… Inside, I could dream."
+                    "Every child deserves the safety and support needed to imagine "
+                    "a future beyond poverty."
                 ),
-                "attribution": None,
+                "attribution": "Northern Transformation Initiative",
             },
             {
                 "text": (
-                    "Even in the shadows of fear, sparks of hope persisted. "
-                    "I clung to education as my only escape."
+                    "Education can open a door, but stability gives a child the "
+                    "chance to walk through it."
                 ),
-                "attribution": None,
+                "attribution": "Northern Transformation Initiative",
             },
         ],
     },
@@ -890,15 +916,21 @@ LEADERSHIP_DEFAULTS: dict = {
         "members": [
             {
                 "role": "President & Director",
-                "name": "Abdirahman Muktar",
+                "name": "Adan Muktar",
+                "photoUrl": None,
+                "bioShort": None,
             },
             {
                 "role": "Treasurer",
                 "name": "Osman Haji",
+                "photoUrl": None,
+                "bioShort": None,
             },
             {
                 "role": "Clerk",
                 "name": "Ismail Jama",
+                "photoUrl": None,
+                "bioShort": None,
             },
         ],
     },
@@ -936,16 +968,6 @@ BOOKS_DEFAULTS: dict = {
                 "dp/B0FS69WM9Q"
             ),
             "badge": None,
-        },
-        {
-            "title": "The Rebirth of a Nation",
-            "blurb": (
-                "A reflection on identity, transformation, and the path forward."
-            ),
-            "coverImageUrl": None,
-            "ctaLabel": None,
-            "ctaUrl": None,
-            "badge": "Coming soon",
         },
     ],
 }
@@ -1577,13 +1599,15 @@ LAYOUT_DEFAULTS: dict = {
 }
 
 
-# ========================================================================
+# ==========================================================================
 # REGISTRY
-# ========================================================================
+# ==========================================================================
 #
-# Legacy slug keys are retained here because existing backend/frontend code
-# may still request them. Public navigation now uses Bright Futures Kenya URLs.
+# Legacy slug keys are retained because existing backend/frontend code may
+# still request them. Public navigation uses Bright Futures Kenya URLs.
+#
 # Do not rename these internal keys until the routing/API layer is migrated.
+# ==========================================================================
 
 
 SCHEMA_BY_SLUG: dict[str, type[BaseModel]] = {
