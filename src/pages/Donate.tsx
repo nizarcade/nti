@@ -26,6 +26,10 @@ import {
   waysToGive,
 } from "@/content/site";
 
+/*
+ * Internal designation values are retained for backend compatibility.
+ * Public-facing labels reflect NTI's current child-focused programs.
+ */
 type Designation =
   | "general"
   | "grace_bridge"
@@ -90,15 +94,15 @@ export default function Donate() {
     <>
       <Seo
         title="Donate"
-        description="Make a gift to support NTI's programs across Kenya."
+        description="Support vulnerable children through Northern Transformation Initiative's child-focused programs in Kenya."
         pathname="/donate"
       />
 
       <Container sx={{ py: { xs: 8, md: 12 } }}>
         <SectionHeading
           eyebrow="Donate"
-          title="Your gift fuels measurable outcomes."
-          subtitle="All donations are stewarded responsibly and directed toward education access, maternal stability, and community empowerment."
+          title="Help build brighter futures for vulnerable children."
+          subtitle="Your gift helps provide safe care, education, nutrition, health support, safeguarding, and opportunities for children to learn, grow, and thrive."
         />
 
         <Grid container spacing={4}>
@@ -185,15 +189,15 @@ export default function Donate() {
                   </option>
 
                   <option value="grace_bridge">
-                    Grace Bridge Initiative
+                    Bright Futures Kenya
                   </option>
 
                   <option value="education">
-                    Education Support
+                    Education &amp; Learning
                   </option>
 
                   <option value="livelihood">
-                    Livelihood &amp; Empowerment
+                    Safe Care &amp; Protection
                   </option>
                 </TextField>
 
@@ -386,7 +390,7 @@ export default function Donate() {
                       color: "text.secondary",
                     }}
                   >
-                    For sponsorship, corporate, or church
+                    For sponsorship, corporate, or organizational
                     partnerships,{" "}
                     <a href="/contact">contact us</a>.
                   </Typography>
