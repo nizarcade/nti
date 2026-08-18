@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 import json
@@ -30,19 +31,22 @@ class Settings(BaseSettings):
     STRIPE_WEBHOOK_SECRET: str = ""
     STRIPE_MONTHLY_PRICE_MAP: str = "{}"
 
-    # PayPal
-    PAYPAL_CLIENT_ID: str = ""
-    PAYPAL_CLIENT_SECRET: str = ""
-    PAYPAL_BASE_URL: str = "https://api-m.sandbox.paypal.com"
-
-    # Receipts / org
-    RECEIPT_FROM_EMAIL: str = "info@ntiafrica.org"
+    # Receipts / organization
+    RECEIPT_FROM_EMAIL: str = (
+        "info@northerntransformationinitiative.org"
+    )
     ORG_LEGAL_NAME: str = "Northern Transformation Initiative"
-    ORG_ADDRESS: str = "P.O. Box 14271-00100, Nairobi, Kenya"
+    ORG_ADDRESS: str = (
+        "P.O. Box 14271-00100, Nairobi, Kenya"
+    )
 
     PUBLIC_WEB_URL: str = "http://localhost:3030"
-    CONTACT_TO_EMAIL: str = "info@ntiafrica.org"
 
+    CONTACT_TO_EMAIL: str = (
+        "info@northerntransformationinitiative.org"
+    )
+
+    # SMTP
     SMTP_HOST: str = ""
     SMTP_PORT: int = 587
     SMTP_USER: str = ""
@@ -60,13 +64,22 @@ class Settings(BaseSettings):
 
     @property
     def allowed_origins(self) -> list[str]:
-        return [o.strip() for o in self.ALLOWED_ORIGINS.split(",") if o.strip()]
+        return [
+            origin.strip()
+            for origin in self.ALLOWED_ORIGINS.split(",")
+            if origin.strip()
+        ]
 
     @property
     def monthly_price_map(self) -> dict[str, str]:
         try:
-            data = json.loads(self.STRIPE_MONTHLY_PRICE_MAP or "{}")
-            return {str(k): str(v) for k, v in data.items()}
+            data = json.loads(
+                self.STRIPE_MONTHLY_PRICE_MAP or "{}"
+            )
+            return {
+                str(key): str(value)
+                for key, value in data.items()
+            }
         except json.JSONDecodeError:
             return {}
 
