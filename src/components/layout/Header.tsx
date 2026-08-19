@@ -187,7 +187,7 @@ export default function Header({ content }: Props = {}) {
               sx={{
                 display: {
                   xs: "none",
-                  lg: "flex",
+                  md: "flex",
                 },
                 alignItems: "center",
                 flexShrink: 0,
@@ -207,7 +207,7 @@ export default function Header({ content }: Props = {}) {
               sx={{
                 display: {
                   xs: "inline-flex",
-                  lg: "none",
+                  md: "none",
                 },
                 ml: "auto",
               }}
