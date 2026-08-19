@@ -1,5 +1,6 @@
 import Layout from "@/components/layout/Layout";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+
 import Home from "@/pages/Home";
 import About from "@/pages/About";
 import Leadership from "@/pages/Leadership";
@@ -21,6 +22,7 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import Terms from "@/pages/Terms";
 import NotFound from "@/pages/NotFound";
 import DynamicPage from "@/pages/DynamicPage";
+
 import AdminLogin from "@/pages/admin/AdminLogin";
 import AdminLayout from "@/pages/admin/AdminLayout";
 import AdminOverview from "@/pages/admin/AdminOverview";
@@ -41,6 +43,7 @@ import AdminGetInvolvedPage from "@/pages/admin/AdminGetInvolvedPage";
 import AdminLayoutContentPage from "@/pages/admin/AdminLayoutContentPage";
 import AdminCustomPagesListPage from "@/pages/admin/AdminCustomPagesListPage";
 import AdminCustomPageEditor from "@/pages/admin/AdminCustomPageEditor";
+
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import { GlobalNgoJsonLd } from "@/components/ui/Seo";
 import { AuthProvider, RequireAuth } from "@/auth/AuthContext";
@@ -50,37 +53,95 @@ export default function App() {
     <AuthProvider>
       <ScrollToTop />
       <GlobalNgoJsonLd />
+
       <Routes>
+        {/* Public website */}
         <Route element={<Layout />}>
           <Route index element={<Home />} />
+
+          {/* About */}
           <Route path="about" element={<About />} />
           <Route path="about/leadership" element={<Leadership />} />
           <Route path="about/books" element={<Books />} />
-          <Route path="programs" element={<Programs />} />
-          <Route path="programs/bright-futures-kenya" element={<GraceBridge />} />
-<Route path="programs/bright-futures-kenya/the-need" element={<TheProblem />} />
-<Route path="programs/bright-futures-kenya/our-solution" element={<OurSolution />} />
 
-<Route path="programs/grace-bridge" element={<Navigate to="/programs/bright-futures-kenya" replace />} />
-<Route path="programs/grace-bridge/problem" element={<Navigate to="/programs/bright-futures-kenya/the-need" replace />} />
-<Route path="programs/grace-bridge/solution" element={<Navigate to="/programs/bright-futures-kenya/our-solution" replace />} />
+          {/* Programs */}
+          <Route path="programs" element={<Programs />} />
+          <Route
+            path="programs/bright-futures-kenya"
+            element={<GraceBridge />}
+          />
+          <Route
+            path="programs/bright-futures-kenya/the-need"
+            element={<TheProblem />}
+          />
+          <Route
+            path="programs/bright-futures-kenya/our-solution"
+            element={<OurSolution />}
+          />
+
+          {/* Legacy Grace Bridge URLs */}
+          <Route
+            path="programs/grace-bridge"
+            element={
+              <Navigate
+                to="/programs/bright-futures-kenya"
+                replace
+              />
+            }
+          />
+          <Route
+            path="programs/grace-bridge/problem"
+            element={
+              <Navigate
+                to="/programs/bright-futures-kenya/the-need"
+                replace
+              />
+            }
+          />
+          <Route
+            path="programs/grace-bridge/solution"
+            element={
+              <Navigate
+                to="/programs/bright-futures-kenya/our-solution"
+                replace
+              />
+            }
+          />
+
+          {/* Impact */}
           <Route path="impact" element={<ImpactTransparency />} />
+
+          {/* Get involved */}
           <Route path="get-involved" element={<GetInvolved />} />
           <Route path="volunteer" element={<Volunteer />} />
+
+          {/* Donations */}
           <Route path="donate" element={<Donate />} />
           <Route path="donate/success" element={<DonateSuccess />} />
           <Route path="donate/cancel" element={<DonateCancel />} />
+
+          {/* Campaigns */}
           <Route path="campaigns" element={<Campaigns />} />
           <Route path="c/:slug" element={<CampaignDetail />} />
+
+          {/* Contact */}
           <Route path="contact" element={<Contact />} />
+
+          {/* Legal */}
           <Route path="privacy" element={<PrivacyPolicy />} />
           <Route path="terms" element={<Terms />} />
+
+          {/* CMS dynamic pages */}
           <Route path=":slug" element={<DynamicPage />} />
+
+          {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Route>
 
-        {/* Admin: standalone (no public Layout), JWT-protected. */}
+        {/* Admin login */}
         <Route path="/admin/login" element={<AdminLogin />} />
+
+        {/* Protected admin area */}
         <Route
           path="/admin"
           element={
@@ -90,23 +151,52 @@ export default function App() {
           }
         >
           <Route index element={<AdminOverview />} />
+
           <Route path="donations" element={<AdminDonations />} />
           <Route path="contacts" element={<AdminContacts />} />
           <Route path="volunteers" element={<AdminVolunteers />} />
           <Route path="campaigns" element={<AdminCampaigns />} />
+
+          {/* Admin page editors */}
           <Route path="pages/home" element={<AdminHomePage />} />
           <Route path="pages/about" element={<AdminAboutPage />} />
-          <Route path="pages/leadership" element={<AdminLeadershipPage />} />
+          <Route
+            path="pages/leadership"
+            element={<AdminLeadershipPage />}
+          />
           <Route path="pages/books" element={<AdminBooksPage />} />
           <Route path="pages/programs" element={<AdminProgramsPage />} />
-          <Route path="pages/grace-bridge" element={<AdminGraceBridgePage />} />
-          <Route path="pages/the-problem" element={<AdminTheProblemPage />} />
-          <Route path="pages/our-solution" element={<AdminOurSolutionPage />} />
+          <Route
+            path="pages/grace-bridge"
+            element={<AdminGraceBridgePage />}
+          />
+          <Route
+            path="pages/the-problem"
+            element={<AdminTheProblemPage />}
+          />
+          <Route
+            path="pages/our-solution"
+            element={<AdminOurSolutionPage />}
+          />
           <Route path="pages/impact" element={<AdminImpactPage />} />
-          <Route path="pages/get-involved" element={<AdminGetInvolvedPage />} />
-          <Route path="pages/layout" element={<AdminLayoutContentPage />} />
-          <Route path="pages-custom" element={<AdminCustomPagesListPage />} />
-          <Route path="pages-custom/:id" element={<AdminCustomPageEditor />} />
+          <Route
+            path="pages/get-involved"
+            element={<AdminGetInvolvedPage />}
+          />
+          <Route
+            path="pages/layout"
+            element={<AdminLayoutContentPage />}
+          />
+
+          {/* Custom CMS pages */}
+          <Route
+            path="pages-custom"
+            element={<AdminCustomPagesListPage />}
+          />
+          <Route
+            path="pages-custom/:id"
+            element={<AdminCustomPageEditor />}
+          />
         </Route>
       </Routes>
     </AuthProvider>
