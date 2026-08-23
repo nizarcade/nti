@@ -134,7 +134,7 @@ export default function ProgramsView({
                 >
                   <Box
                     component="img"
-                    src="/bright-futures-child-01.png"
+                    src="/fd64fa29-7c5b-4639-b1aa-7a34349cd33b2.png"
                     alt="Representative image of a Kenyan child"
                     sx={{
                       width: "100%",
@@ -217,8 +217,7 @@ export default function ProgramsView({
                         endIcon={<ArrowForwardIcon />}
                         sx={{ mt: 3 }}
                       >
-                        {currentFocus.ctaLabel ||
-                          "Learn more"}
+                        {currentFocus.ctaLabel || "Learn more"}
                       </Button>
                     </Box>
                   )}
