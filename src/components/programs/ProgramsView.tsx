@@ -84,6 +84,7 @@ export default function ProgramsView({
                               color="primary"
                               fontSize="small"
                             />
+
                             <Typography variant="body2">
                               {b}
                             </Typography>
@@ -134,7 +135,7 @@ export default function ProgramsView({
                 >
                   <Box
                     component="img"
-                    src="/fd64fa29-7c5b-4639-b1aa-7a34349cd33b2.png"
+                    src="/fd64fa29-7c5b-4639-b1aa-734349cd33b2.png"
                     alt="Representative image of a Kenyan child"
                     sx={{
                       width: "100%",
