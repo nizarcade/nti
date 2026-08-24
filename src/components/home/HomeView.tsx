@@ -20,6 +20,8 @@ import { campaignsApi, type PublicCampaign } from "@/api/campaigns";
 import { getIconComponent } from "@/components/icons/registry";
 import type { Cta, HomeContent } from "@/content/homeDefaults";
 
+const HOME_HERO_IMAGE = "/home-hero.jpg";
+
 const HOME_PROGRAM_IMAGE =
   "/fd64fa29-7c5b-4639-b1aa-734349cd33b2.png";
 
@@ -273,11 +275,8 @@ export default function HomeView({
             >
               <Box
                 component="img"
-                src={
-                  hero.backgroundImageUrl ||
-                  HOME_PROGRAM_IMAGE
-                }
-                alt="Representative image of a child in Kenya"
+                src={HOME_HERO_IMAGE}
+                alt="Children learning together with an adult in a community setting"
                 sx={{
                   position: "absolute",
                   inset: 0,
